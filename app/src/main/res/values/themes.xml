@@ -13,4 +13,9 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="MyBottomNavigationView.TextAppearance" parent="TextAppearance.MaterialComponents.Tooltip">
+        <item name="android:textSize">0sp</item>
+        <item name="fontFamily">@font/open_sans_regular</item>
+    </style>
 </resources>

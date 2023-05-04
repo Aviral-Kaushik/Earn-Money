@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp"
+    android:elevation="0dp">
+
+    <ImageView
+        android:id="@+id/option_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/super_reward"
+        android:src="@drawable/ic_candy_crush"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/option_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/open_sans_semi_bold"
+        android:text="@string/candy_crush"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/option_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/option_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/open_sans_regular"
+        android:text="@string/options_desc"
+        android:textAllCaps="false"
+        android:textColor="#B3000000"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/option_title"
+        app:layout_constraintTop_toBottomOf="@id/option_title" />
+
+
+    <TextView
+        android:id="@+id/options_reward_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/open_sans_regular"
+        android:textStyle="bold"
+        android:text="@string/dummy_price"
+        android:textAllCaps="false"
+        android:textColor="#E96200"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/btn_get"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/open_sans_regular"
+        android:textStyle="bold"
+        android:text="@string/get"
+        android:textAllCaps="false"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_get_background"
+        android:textSize="6sp"
+        app:layout_constraintEnd_toEndOf="@id/options_reward_amount"
+        app:layout_constraintStart_toStartOf="@id/options_reward_amount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/options_reward_amount"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

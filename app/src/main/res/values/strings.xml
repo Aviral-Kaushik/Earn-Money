@@ -17,4 +17,17 @@
     <string name="email">E-mail</string>
     <string name="dummy_email">Lexi1234@gmail.com</string>
     <string name="continues">Continue</string>
+    <string name="new_password">New Password</string>
+    <string name="password_toggle">Password Toggle</string>
+    <string name="dummy_user">Hi, Lexi</string>
+    <string name="dummy_price">$5.00</string>
+    <string name="ludo">Ludo</string>
+    <string name="pubg">Pubg</string>
+    <string name="card">Card</string>
+    <string name="chess">Chess</string>
+    <string name="more">More</string>
+    <string name="super_reward">Super Reward</string>
+    <string name="candy_crush">Candy Crush</string>
+    <string name="options_desc">Earn $0.23 by completing the ...</string>
+    <string name="get">Get</string>
 </resources>
