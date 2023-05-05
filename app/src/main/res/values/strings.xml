@@ -30,4 +30,16 @@
     <string name="candy_crush">Candy Crush</string>
     <string name="options_desc">Earn $0.23 by completing the ...</string>
     <string name="get">Get</string>
+    <string name="back">Back</string>
+    <string name="spin_wheel">Spin Win</string>
+    <string name="spin">Spin</string>
+    <string name="chances_left">Chances Left = </string>
+    <string name="dummy_chances">20</string>
+    <string name="rewards">Rewards</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="you_have_won_rewards">You have won rewards.</string>
+    <string name="you_won">You Won</string>
+    <string name="scratch_desc">Scratch the above card by swiping on it.</string>
+    <string name="time_left">Time Left =</string>
+    <string name="dummy_time">05:23:44</string>
 </resources>
