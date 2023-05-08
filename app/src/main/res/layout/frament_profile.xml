@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEBD9">
+
+    <ImageView
+        android:id="@+id/ic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_back2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profile_card"
+        android:layout_width="match_parent"
+        android:layout_height="570dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/profile_card_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="@string/dummy_username"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:layout_marginTop="75dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/user_balance"
+            android:layout_width="164dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/profile_user_balance_background"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/dummy_price"
+            android:textAlignment="center"
+            android:textColor="#E97208"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/username"
+            app:layout_constraintStart_toStartOf="@id/username"
+            app:layout_constraintTop_toBottomOf="@id/username" />
+
+        <LinearLayout
+            android:id="@+id/profile_option"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/user_balance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:id="@+id/my_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:weightSum="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.5"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_wallet"
+                    android:contentDescription="@string/my_balance"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_balance"
+                    android:textColor="#B3000000"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4D000000"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+            <LinearLayout
+                android:id="@+id/invite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:weightSum="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.4"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_invite"
+                    android:contentDescription="@string/invite"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invite"
+                    android:textColor="#B3000000"
+                    android:layout_marginStart="7dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4D000000"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+            <LinearLayout
+                android:id="@+id/help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:weightSum="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.4"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_help"
+                    android:contentDescription="@string/help"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help"
+                    android:textColor="#B3000000"
+                    android:layout_weight="1"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4D000000"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+            <LinearLayout
+                android:id="@+id/rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:weightSum="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.4"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_rate"
+                    android:contentDescription="@string/rate_us"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rate_us"
+                    android:textColor="#B3000000"
+                    android:layout_weight="1"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4D000000"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+            <LinearLayout
+                android:id="@+id/terms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:weightSum="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.5"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_terms"
+                    android:contentDescription="@string/terms"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_conditions"
+                    android:textColor="#B3000000"
+                    android:layout_weight="1"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4D000000"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+            <LinearLayout
+                android:id="@+id/privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:weightSum="2">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.5"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_privacy_policy"
+                    android:contentDescription="@string/privacy_policy"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/privacy_policy"
+                    android:textColor="#B3000000"
+                    android:layout_weight="1"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_privacy_policy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4D000000"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+            <LinearLayout
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:weightSum="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.4"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_logout"
+                    android:contentDescription="@string/logout"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logout"
+                    android:textColor="#B3000000"
+                    android:layout_weight="1"
+                    android:layout_marginStart="7dp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider_logout"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#4D000000"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_profile_picture"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_dummy_pp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profile_card" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

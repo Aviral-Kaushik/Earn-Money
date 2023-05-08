@@ -57,6 +57,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <ImageView
+        android:id="@+id/ic_target"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_target"
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/spin"
+        app:layout_constraintTop_toTopOf="@id/spinning_wheel"
+        app:layout_constraintStart_toStartOf="@id/spinning_wheel"
+        app:layout_constraintEnd_toEndOf="@id/spinning_wheel"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_spin"
         android:layout_width="match_parent"

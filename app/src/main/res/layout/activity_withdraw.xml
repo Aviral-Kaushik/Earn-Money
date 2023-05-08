@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/withdraw_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.WithdrawActivity">
+
+    <ImageView
+        android:id="@+id/ic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_back3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/open_sans_semi_bold"
+        android:text="@string/dummy_user_first_name"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@id/ic_back"
+        app:layout_constraintStart_toEndOf="@id/ic_back"
+        app:layout_constraintTop_toTopOf="@id/ic_back" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_profile_picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/ic_dummy_pp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_your_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="37dp"
+        android:fontFamily="@font/open_sans_semi_bold"
+        android:text="@string/your_balance"
+        android:textColor="#B3000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/ic_back"
+        app:layout_constraintTop_toBottomOf="@id/username" />
+
+    <TextView
+        android:id="@+id/user_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/open_sans_semi_bold"
+        android:text="@string/dummy_price"
+        android:textColor="#DF6D07"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/user_profile_picture"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_picture" />
+
+    <ImageView
+        android:id="@+id/withdraw_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:contentDescription="@string/dummy_price"
+        android:src="@drawable/ic_menu_dots"
+        app:layout_constraintBottom_toBottomOf="@id/user_balance"
+        app:layout_constraintStart_toEndOf="@id/user_balance"
+        app:layout_constraintTop_toTopOf="@id/user_balance" />
+
+    <TextView
+        android:id="@+id/withdraw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/withdraw"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@id/tv_your_balance"
+        app:layout_constraintTop_toBottomOf="@id/tv_your_balance" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/amount"
+        android:textColor="#99000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/withdraw"
+        app:layout_constraintTop_toBottomOf="@id/withdraw" />
+
+    <ImageView
+        android:id="@+id/iv_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_down"
+        app:layout_constraintBottom_toBottomOf="@id/withdraw"
+        app:layout_constraintStart_toEndOf="@id/withdraw"
+        app:layout_constraintTop_toTopOf="@id/withdraw" />
+
+    <ImageView
+        android:id="@+id/iv_arrows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_arrows"
+        app:layout_constraintBottom_toBottomOf="@id/withdraw"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/withdraw" />
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/withdraw_balance_background"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_amount">
+
+        <TextView
+            android:id="@+id/withdraw_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:background="@drawable/withdraw_balance_background"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="@string/dummy_withdraw_amount"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/withdraw_currency"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/withdraw_currency_background"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/dollar_icon"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="25dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="@id/ll1"
+        app:layout_constraintStart_toStartOf="@id/ll1"
+        app:layout_constraintTop_toBottomOf="@id/ll1"
+        android:baselineAligned="false">
+
+
+        <LinearLayout
+            android:id="@+id/paypal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_paypal"
+                android:layout_gravity="center"
+                android:contentDescription="@string/paypal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paypal"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="#80000000"/>
+
+            <ImageView
+                android:id="@+id/paypal_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/paypal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/paytm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_paytm"
+                android:layout_gravity="center"
+                android:contentDescription="@string/paytm"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paytm"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="#80000000"/>
+
+            <ImageView
+                android:id="@+id/paytm_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/paytm"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_bank"
+                android:layout_gravity="center"
+                android:contentDescription="@string/bank"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bank"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="#80000000"/>
+
+            <ImageView
+                android:id="@+id/bank_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/bank"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/confirm"
+        android:fontFamily="@font/constantia"
+        android:textSize="17sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="#E86F03"
+        android:layout_marginStart="35dp"
+        android:elevation="0dp"
+        android:background="#FFF0E3"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="120dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/cancel"
+        android:fontFamily="@font/constantia"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#80000000"
+        android:layout_marginStart="35dp"
+        android:elevation="0dp"
+        android:background="#80FFF0E3"
+        android:layout_marginEnd="35dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/btn_confirm"
+        app:layout_constraintEnd_toEndOf="@id/btn_confirm"
+        app:layout_constraintTop_toBottomOf="@id/btn_confirm"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,6 +41,8 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull OptionsAdapter.ViewHolder holder, int position) {
 
+        setAnimation(holder.itemView, holder.itemView.getContext());
+
         holder.optionTitle.setText(optionList.get(position).getOptionTitle());
         holder.optionDescription.setText(optionList.get(position).getOptionDescription());
         holder.optionRewardAmount.setText(String.format("$%s",
