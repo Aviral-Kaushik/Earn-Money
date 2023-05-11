@@ -22,11 +22,11 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     private ActivityMainBinding binding;
 
-    private HomeFragment homeFragment = new HomeFragment(this);
-    private SpinFragment spinFragment = new SpinFragment(this);
-    private ScratchCardFragment scratchCardFragment = new ScratchCardFragment(this);
-    private ReferFragment referFragment = new ReferFragment(this);
-    private ProfileFragment profileFragment = new ProfileFragment(this);
+    private final HomeFragment homeFragment = new HomeFragment(this);
+    private final SpinFragment spinFragment = new SpinFragment(this);
+    private final ScratchCardFragment scratchCardFragment = new ScratchCardFragment(this);
+    private final ReferFragment referFragment = new ReferFragment(this);
+    private final ProfileFragment profileFragment = new ProfileFragment(this);
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -127,5 +127,17 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 .show(referFragment)
                 .commit();
         activeFragment = referFragment;
+
+        binding.bottomNavigationBar.setSelectedItemId(R.id.menu4);
+    }
+
+    public void showHomeFragment() {
+        fragmentManager.beginTransaction()
+                .hide(activeFragment)
+                .show(homeFragment)
+                .commit();
+        activeFragment = homeFragment;
+
+        binding.bottomNavigationBar.setSelectedItemId(R.id.menu1);
     }
 }

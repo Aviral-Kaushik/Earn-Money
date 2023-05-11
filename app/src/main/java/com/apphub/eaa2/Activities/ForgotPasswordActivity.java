@@ -17,6 +17,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         binding = ActivityForgotPasswordBinding.inflate(getLayoutInflater());;
         setContentView(binding.getRoot());
 
-        binding.btnContinue.setOnClickListener(view -> startActivity(new Intent(this, PasswordActivity.class)));
+        binding.btnContinue.setOnClickListener(view -> {
+            startActivity(new Intent(this, PasswordActivity.class));
+            finish();
+        });
     }
 }

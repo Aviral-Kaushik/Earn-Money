@@ -38,6 +38,8 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
+
         binding.myBalance.setOnClickListener(view1 -> mainActivity.startActivity(new Intent(mainActivity, WithdrawActivity.class)));
 
         binding.invite.setOnClickListener(view1 -> mainActivity.showReferFragment());

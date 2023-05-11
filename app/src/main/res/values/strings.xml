@@ -80,4 +80,11 @@
     <string name="bank_id">Bank Account No.</string>
     <string name="phone_no">Phone no.</string>
     <string name="payment_mode">paymentMode</string>
+    <string name="payment_successful">Payment Successful</string>
+    <string name="successful_desc">Your withdrawal request has been Done !</string>
+    <string name="done">Done</string>
+    <string name="games">Games</string>
+    <string name="more_games">More Games</string>
+    <string name="game_name">Game Name</string>
+    <string name="game_coins">Game Coins</string>
 </resources>

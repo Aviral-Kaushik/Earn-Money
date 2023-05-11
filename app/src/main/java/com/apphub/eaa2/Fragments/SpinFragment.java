@@ -64,6 +64,8 @@ public class SpinFragment extends Fragment {
         getChances();
 
         binding.btnSpin.setOnClickListener(slideToActView -> startSpin());
+
+        binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
     }
 
     @Override
@@ -155,9 +157,7 @@ public class SpinFragment extends Fragment {
             editor.putInt("chancesLeft", (chancesLeft - 1));
             editor.apply();
 
-            chancesLeft = 0;
-
-            binding.chances.setText(String.valueOf(chancesLeft));
+            binding.chances.setText(String.valueOf(chancesLeft - 1));
 
             if (chancesLeft == 0) {
                 timerUtils();

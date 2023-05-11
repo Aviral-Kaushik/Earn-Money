@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.apphub.eaa2.Activities.GamesActivity;
 import com.apphub.eaa2.Activities.LoginActivity;
 import com.apphub.eaa2.Activities.MainActivity;
 import com.apphub.eaa2.Adapter.OptionsAdapter;
@@ -53,6 +54,9 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.userProfilePicture.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, LoginActivity.class)));
+
+        binding.banner.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, GamesActivity.class)));
+            
     }
 
     private void setUpOptionAdapter() {

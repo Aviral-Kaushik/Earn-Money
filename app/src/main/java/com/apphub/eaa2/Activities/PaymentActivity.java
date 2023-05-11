@@ -74,8 +74,8 @@ public class PaymentActivity extends AppCompatActivity {
                    !(binding.id.getText().toString().equals("")) &&
                     !(binding.phoneNumber.getText().toString().equals("")))  {
 
-//                Intent intent = new Intent(this, SuccessfulActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(this, SuccessfulActivity.class);
+                startActivity(intent);
 
             }  else {
 

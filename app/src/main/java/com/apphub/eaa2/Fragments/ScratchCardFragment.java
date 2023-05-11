@@ -29,9 +29,6 @@ public class ScratchCardFragment extends Fragment {
     private FragmentScratchCardBinding binding;
     private final MainActivity mainActivity;
     private int chancesLeft;
-
-    private boolean isTimerOn = false;
-
     public ScratchCardFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
@@ -50,6 +47,8 @@ public class ScratchCardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         getChances();
+
+        binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
 
         binding.scratchView.setRevealListener(new ScratchView.IRevealListener() {
             @Override
@@ -88,12 +87,9 @@ public class ScratchCardFragment extends Fragment {
 
         if (chancesLeft > 0) {
             editor.putInt("chancesLeft", (chancesLeft - 1));
-//            editor.putInt("chancesLeft", 0);
             editor.apply();
 
-//            chancesLeft = 0;
-
-            binding.chances.setText(String.valueOf(chancesLeft));
+            binding.chances.setText(String.valueOf(chancesLeft - 1));
 
             if (chancesLeft == 0) {
                 timerUtils();
@@ -162,8 +158,6 @@ public class ScratchCardFragment extends Fragment {
 
         if (System.currentTimeMillis() < endTime) {
 
-            isTimerOn = true;
-
             CountDownTimer countDownTimer = new CountDownTimer(endTime - startTime, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -195,8 +189,6 @@ public class ScratchCardFragment extends Fragment {
                     myEdit.remove("endTime");
                     myEdit.apply();
                     refreshChances();
-
-                    isTimerOn = false;
                 }
             };
             countDownTimer.start(); // Start the timer
@@ -216,8 +208,6 @@ public class ScratchCardFragment extends Fragment {
             myEdit.remove("endTime");
             myEdit.apply();
             refreshChances();
-
-            isTimerOn = false;
         }
 
     }

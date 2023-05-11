@@ -40,6 +40,8 @@ public class ReferFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
+
         binding.shareWhatsapp.setOnClickListener(view1 -> sendWhatsappMessage());
         binding.shareTelegram.setOnClickListener(view1 -> sendTelegramMessage());
         binding.share.setOnClickListener(view1 -> shareIntent());

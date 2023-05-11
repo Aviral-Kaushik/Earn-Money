@@ -24,6 +24,8 @@ public class WithdrawActivity extends AppCompatActivity {
         binding = ActivityWithdrawBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.icBack.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
+
         binding.paypal.setOnClickListener(view -> {
 
             resetAllPaymentMethods();
