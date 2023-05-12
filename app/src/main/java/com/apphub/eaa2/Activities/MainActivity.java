@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -38,9 +40,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        boolean isLogin = true;
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                getString(R.string.check_shared_preferences), Context.MODE_PRIVATE);
+
+        boolean isLogin = sharedPreferences.getBoolean("isLoggedIn", false);
 
         if (isLogin) {
+
             fragmentManager.beginTransaction()
                     .add(R.id.frame_container, homeFragment, "Home Fragment")
                     .commit();

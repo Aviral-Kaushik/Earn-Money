@@ -53,8 +53,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.userProfilePicture.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, LoginActivity.class)));
-
         binding.banner.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, GamesActivity.class)));
             
     }
