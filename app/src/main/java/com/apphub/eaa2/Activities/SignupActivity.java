@@ -76,35 +76,27 @@ public class SignupActivity extends AppCompatActivity {
                         "Please enter username",
                         Snackbar.LENGTH_SHORT
                 ).show();
-            }
-
-            if (binding.ediTextEmail.getText().toString().equals("")) {
+            } else if (binding.ediTextEmail.getText().toString().equals("")) {
                 Snackbar.make(
                         binding.layoutSignup,
                         "Please enter email",
                         Snackbar.LENGTH_SHORT
                 ).show();
-            }
-
-            if (binding.ediTextPassword.getText().toString().equals("")) {
+            } else if (binding.ediTextPassword.getText().toString().equals("")) {
                 Snackbar.make(
                         binding.layoutSignup,
                         "Please enter password",
                         Snackbar.LENGTH_SHORT
                 ).show();
-            }
-
-            if (binding.editTextConfirmPassword.getText().toString().equals("")) {
+            } else if (binding.editTextConfirmPassword.getText().toString().equals("")) {
                 Snackbar.make(
                         binding.layoutSignup,
                         "Please enter confirm password",
                         Snackbar.LENGTH_SHORT
                 ).show();
-            }
+            } else if (binding.ediTextPassword.getText().toString().equals(binding.editTextConfirmPassword.getText().toString())) {
 
-            if (binding.ediTextPassword.getText().toString().equals(binding.editTextConfirmPassword.getText().toString())) {
-
-                registerUserWithEmailAndPassword();
+                checkIfEmailAlreadyRegistered();
 
             } else {
                 Snackbar.make(
@@ -158,18 +150,8 @@ public class SignupActivity extends AppCompatActivity {
 
                             if (message.equals("Registered")) {
 
-                                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.check_shared_preferences), Context.MODE_PRIVATE);
-                                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                addUserDataToSharedPreferences(email);
 
-                                Log.d(TAG, "addUserDataToSharedPreferences: Adding data to Shared Preferences: " + email);
-                                myEdit.putBoolean("isLoggedIn", true);
-                                myEdit.putString("email", email);
-
-                                myEdit.apply();
-
-                                loadingDialog.dismiss();
-
-                                startActivity(new Intent(SignupActivity.this, MainActivity.class));
                             } else if (message.equals("Email Not Registered")) {
 
                                 registerUserWithEmail(account);
@@ -204,7 +186,63 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    private void registerUserWithEmail(GoogleSignInAccount account) {
+    private void checkIfEmailAlreadyRegistered() {
+
+        AndroidNetworking.post(ApiLinks.CHECK_EMAIL)
+                .addBodyParameter("email", binding.ediTextUserName.getText().toString())
+                .build().getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+
+                            String message = response.getString("message");
+
+                            if (message.equals("Registered")) {
+
+                                loadingDialog.dismiss();
+
+                                Snackbar.make(
+                                        binding.layoutSignup,
+                                        "Email already registered",
+                                        Snackbar.LENGTH_SHORT
+                                ).show();
+
+                                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+
+
+                            } else if (message.equals("Email Not Registered")) {
+
+                                registerUserWithEmailAndPassword();
+
+                            } else {
+                                loadingDialog.dismiss();
+
+                                Snackbar.make(
+                                        binding.layoutSignup,
+                                        "Server Error! Please try again",
+                                        Snackbar.LENGTH_SHORT
+                                ).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "onResponse: Exception while check email: " + e.getMessage());
+
+                            loadingDialog.dismiss();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d(TAG, "onError: error while making api call for check email: " + anError.getMessage());
+                    }
+                });
+
+    }
+
+    public void registerUserWithEmail(GoogleSignInAccount account) {
 
         String name = account.getDisplayName();
         String email = account.getEmail();
@@ -385,6 +423,8 @@ public class SignupActivity extends AppCompatActivity {
                             editor.putFloat("lifetime", (float) lifetime);
                             editor.putString("is_rewarded", is_rewarded);
                             editor.apply();
+
+                            loadingDialog.dismiss();
 
                             startActivity(new Intent(SignupActivity.this, MainActivity.class));
 

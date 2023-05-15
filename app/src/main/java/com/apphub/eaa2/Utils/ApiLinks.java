@@ -8,6 +8,7 @@ public class ApiLinks {
     public static final String FETCH_DATA = BASE_URL + "apps/fetchData.php";
     public static final String CHECK_CODE = BASE_URL + "apps/check_ReferralCode.php";
     public static final String REGISTER = BASE_URL + "apps/register.php";
+    public static final String LOGIN = BASE_URL + "apps/login.php";
     public static final String UPDATE_USER_TOKEN = BASE_URL + "token/update_user_token.php";
 
     public static final String GET_USER_COINS = BASE_URL + "apps/get_user_balance.php";
