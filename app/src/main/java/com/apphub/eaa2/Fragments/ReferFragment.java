@@ -20,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class ReferFragment extends Fragment {
 
-    private FragmentReferBinding binding;
+    public FragmentReferBinding binding;
 
     private final MainActivity mainActivity;
 

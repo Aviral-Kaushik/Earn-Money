@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "AviralAPI";
 
+    private final int TOTAL_CHANCES = 30;
+
     private GoogleSignInClient mGoogleSignInClient;
 
     private static final int RX_SIGN_IN = 9001;
@@ -205,8 +207,6 @@ public class LoginActivity extends AppCompatActivity {
                                         Snackbar.LENGTH_SHORT
                                 ).show();
 
-                                addUserDataToSharedPreferences(email);
-
                             } else {
                                 loadingDialog.dismiss();
 
@@ -298,6 +298,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void addUserDataToSharedPreferences(String email) {
 
+        addChancesToSharedPreferences();
+
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.check_shared_preferences), Context.MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
@@ -366,6 +368,24 @@ public class LoginActivity extends AppCompatActivity {
                         loadingDialog.dismiss();
                     }
                 });
+
+    }
+
+    private void addChancesToSharedPreferences() {
+
+        SharedPreferences candyCrushSharedPreferences = getSharedPreferences(
+                getString(R.string.cancy_crush_reward),
+                Context.MODE_PRIVATE
+        );
+
+
+        SharedPreferences.Editor candyCrushEditor = candyCrushSharedPreferences.edit();
+
+        candyCrushEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
+
+        candyCrushEditor.apply();
+
+        Log.d("AviralAPI", "addChancesToSharedPreferences: Added all the chances in shared preferences");
 
     }
 }

@@ -89,4 +89,6 @@
     <string name="game_coins">Game Coins</string>
     <string name="google_oauth_key">414361514903-3apeccorqgbv8tt3kfr6pok2qlkq9a4a.apps.googleusercontent.com</string>
     <string name="check_shared_preferences">UserCheck</string>
+    <string name="cancy_crush_reward">Candy Crush Reward</string>
+    <string name="candy_crush_time">candyCrushTime</string>
 </resources>

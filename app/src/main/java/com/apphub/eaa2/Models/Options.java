@@ -12,14 +12,26 @@ public class Options {
 
     private double optionEarningAmount;
 
+    private int chancesLeft;
+
     public Options(int optionImage,
                    String optionTitle,
                    String optionDescription,
-                   double optionEarningAmount) {
+                   double optionEarningAmount,
+                   int chancesLeft) {
         this.optionImage = optionImage;
         this.optionTitle = optionTitle;
         this.optionDescription = optionDescription;
         this.optionEarningAmount = optionEarningAmount;
+        this.chancesLeft = chancesLeft;
+    }
+
+    public int getChancesLeft() {
+        return chancesLeft;
+    }
+
+    public void setChancesLeft(int chancesLeft) {
+        this.chancesLeft = chancesLeft;
     }
 
     public int getOptionImage() {

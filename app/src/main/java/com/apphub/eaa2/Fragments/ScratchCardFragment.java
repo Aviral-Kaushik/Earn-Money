@@ -26,7 +26,7 @@ public class ScratchCardFragment extends Fragment {
 
     private static final String TAG = "AviralPreferences";
 
-    private FragmentScratchCardBinding binding;
+    public FragmentScratchCardBinding binding;
     private final MainActivity mainActivity;
     private int chancesLeft;
     public ScratchCardFragment(MainActivity mainActivity) {

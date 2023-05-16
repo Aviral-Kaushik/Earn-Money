@@ -28,7 +28,7 @@ public class SpinFragment extends Fragment {
 
     private static final String TAG = "AviralSpinPreferences";
 
-    private FragmentSpinBinding binding;
+    public FragmentSpinBinding binding;
 
     private final MainActivity mainActivity;
 

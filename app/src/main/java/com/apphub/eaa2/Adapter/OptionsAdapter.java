@@ -1,6 +1,9 @@
 package com.apphub.eaa2.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +16,38 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.apphub.eaa2.Activities.MainActivity;
+import com.apphub.eaa2.Dialog.LoadingDialog;
+import com.apphub.eaa2.Models.OptionChances;
 import com.apphub.eaa2.Models.Options;
 import com.apphub.eaa2.R;
+import com.apphub.eaa2.Utils.ApiLinks;
+import com.apphub.eaa2.Utils.TimeUtils;
 import com.bumptech.glide.Glide;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHolder>{
 
-    private final ArrayList<Options> optionList;
+    private static final String TAG = "AviralAPI";
 
-    public OptionsAdapter(ArrayList<Options> optionList) {
+    private final ArrayList<Options> optionList;
+    private final MainActivity mainActivity;
+
+    private final OptionChances chances;
+
+    private LoadingDialog loadingDialog;
+
+    public OptionsAdapter(ArrayList<Options> optionList, MainActivity mainActivity, OptionChances chances) {
         this.optionList = optionList;
+        this.mainActivity = mainActivity;
+        this.chances = chances;
     }
 
     @NonNull
@@ -48,22 +71,33 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
                 optionList.get(position).getOptionEarningAmount()
         ));
 
+        Log.d(TAG, "onBindViewHolder: Chances: " + chances.getCandyCrushChances());
+
         Glide.with(holder.itemView.getContext())
                 .load(optionList.get(position).getOptionImage())
                 .into(holder.optionImage);
 
-        holder.optionButton.setOnClickListener(view -> Toast.makeText(
-                holder.itemView.getContext(),
-                "Option Clicked", Toast.LENGTH_SHORT).show());
+        loadingDialog = new LoadingDialog(mainActivity);
 
+        if (optionList.get(position).getChancesLeft() > 0) {
+
+            holder.optionButton.setOnClickListener(view -> {
+
+                loadingDialog.show();
+
+                decrementChances(optionList.get(position).getOptionTitle(), position);
+
+                updateUserBalance(optionList.get(position).getOptionEarningAmount());
+
+            });
+        } else {
+
+            checkForChancesRenewal(holder.optionButton);
+
+        }
 
     }
 
-    private void setAnimation(View itemView, Context context) {
-        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-
-        itemView.startAnimation(animation);
-    }
 
     @Override
     public int getItemCount() {
@@ -88,6 +122,158 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
             optionButton = itemView.findViewById(R.id.btn_get);
 
         }
+    }
+
+    private void checkForChancesRenewal(TextView optionButton) {
+
+        loadingDialog.show();
+
+        if (chances.getCandyCrushChances() == 0) {
+
+            SharedPreferences candyCrushSharedPreferences = mainActivity.getSharedPreferences(
+                    mainActivity.getString(R.string.cancy_crush_reward),
+                    Context.MODE_PRIVATE
+            );
+
+            long storedTime = candyCrushSharedPreferences.getLong(mainActivity.getString(R.string.candy_crush_time), -1);
+
+            boolean comparison = TimeUtils.compareTimeWithSixHours(storedTime, "dailyBonus");
+
+            if (comparison) {
+
+                SharedPreferences.Editor candyCrushEditor = candyCrushSharedPreferences.edit();
+
+                candyCrushEditor.putInt(
+                        mainActivity.getString(R.string.chances_left),
+                        30
+                );
+
+                candyCrushEditor.apply();
+
+                toggleView(optionButton);
+            }
+
+
+        }
+
+        loadingDialog.dismiss();
+
+    }
+
+    private void decrementChances(String rewardName, int position) {
+
+        Log.d(TAG, "decrementChances: Decrementing Chances");
+
+        switch (rewardName) {
+
+            case "Candy Crush":
+
+                Log.d(TAG, "decrementChances: Opening SP of dailyBonus");
+
+                SharedPreferences candyCrushSharedPreferences = mainActivity.getSharedPreferences(
+                        mainActivity.getString(R.string.cancy_crush_reward),
+                        Context.MODE_PRIVATE
+                );
+
+                SharedPreferences.Editor candyCrushEditor = candyCrushSharedPreferences.edit();
+
+                if (chances.getCandyCrushChances() > 1) {
+
+                    candyCrushEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            (chances.getCandyCrushChances() - 1)
+                    );
+
+                    optionList.get(position).setChancesLeft(chances.getCandyCrushChances() - 1);
+
+                } else {
+
+                    candyCrushEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            0
+                    );
+
+                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for Daily Bonus: " + TimeUtils.getCurrentTime());
+
+                    candyCrushEditor.putLong(
+                            mainActivity.getString(R.string.candy_crush_time),
+                            TimeUtils.getCurrentTime()
+                    );
+
+                    optionList.get(position).setChancesLeft(0);
+                }
+
+                candyCrushEditor.apply();
+
+                Log.d(TAG, "decrementChances: dailyBonus chances--");
+
+                notifyItemChanged(position);
+
+                break;
+
+        }
+
+    }
+
+    private void toggleView(TextView optionButton) {
+
+        optionButton.setBackgroundColor(Color.parseColor("#707070"));
+
+        optionButton.setOnClickListener(view -> Toast.makeText(
+                mainActivity,
+                "All chances for this reward are finished. Please wait for some time",
+                Toast.LENGTH_SHORT).show());
+
+        loadingDialog.dismiss();
+
+    }
+
+    private void setAnimation(View itemView, Context context) {
+        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+
+        itemView.startAnimation(animation);
+    }
+
+    public void updateUserBalance(double value){
+        String uid = mainActivity.getSharedPreferences("user", Context.MODE_PRIVATE).getString("uid", "");
+        String balance_add = String.valueOf(value);
+
+        AndroidNetworking.post(ApiLinks.UPDATE_USER_BALANCE)
+                .addBodyParameter("user_id", uid)
+                .addBodyParameter("value", balance_add)
+                .build().getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, "onResponse: Response in Adapter: " + response);
+
+                        try {
+
+                            String status = response.getString("status");
+
+                            if (status.equals("updated")){
+
+                                Log.d(TAG, "onResponse: User Balance Updated");
+
+                                mainActivity.getUserBalance();
+                                loadingDialog.dismiss();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "onResponse: Exception while updating user balance: " + e.getMessage());
+                            loadingDialog.dismiss();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d(TAG, "onResponse: Error while updating user balance: " + anError.getMessage());
+                        loadingDialog.dismiss();
+                    }
+                });
+
     }
 
 }

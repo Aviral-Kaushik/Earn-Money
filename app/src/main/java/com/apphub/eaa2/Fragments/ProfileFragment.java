@@ -16,7 +16,7 @@ import com.apphub.eaa2.databinding.FramentProfileBinding;
 
 public class ProfileFragment extends Fragment {
 
-    private FramentProfileBinding binding;
+    public FramentProfileBinding binding;
 
     private final MainActivity mainActivity;
 
