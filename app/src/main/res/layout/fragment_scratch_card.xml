@@ -197,6 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dummy_chances"
+            android:layout_marginStart="5dp"
             android:fontFamily="@font/open_sans_bold"
             android:textStyle="bold"
             android:layout_weight="1"

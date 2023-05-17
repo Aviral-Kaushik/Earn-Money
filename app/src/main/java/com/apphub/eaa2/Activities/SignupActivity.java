@@ -457,7 +457,6 @@ public class SignupActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE
         );
 
-
         SharedPreferences.Editor candyCrushEditor = candyCrushSharedPreferences.edit();
 
         candyCrushEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);

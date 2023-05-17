@@ -91,4 +91,5 @@
     <string name="check_shared_preferences">UserCheck</string>
     <string name="cancy_crush_reward">Candy Crush Reward</string>
     <string name="candy_crush_time">candyCrushTime</string>
+    <string name="rewards_completed">Rewards Completed.</string>
 </resources>

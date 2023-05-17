@@ -66,6 +66,8 @@ public class HomeFragment extends Fragment {
 
         candyCrushChances = candyCrushSharedPreferences.getInt(getString(R.string.chances_left), TOTAL_CHANCES);
 
+        Log.d(TAG, "getChancesFromSharedPreference: candyCrushChances in Home Fragment: " + candyCrushChances);
+
         setUpOptionAdapter();
     }
 

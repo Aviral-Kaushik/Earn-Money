@@ -104,8 +104,6 @@ public class ScratchCardFragment extends Fragment {
         SharedPreferences chancesPreferences = mainActivity.getSharedPreferences("scratchChances", Context.MODE_PRIVATE);
         chancesLeft = chancesPreferences.getInt("chancesLeft", 20);
 
-//        chancesLeft = 0;
-
         binding.chances.setText(String.valueOf(chancesLeft));
 
         if (chancesLeft == 0) {

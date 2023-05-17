@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public class TimeUtils {
 
-    private static final String TAG = "AviralTimeUtils";
+    private static final String TAG = "AviralAPI";
 
     public static long getCurrentTime() {
 

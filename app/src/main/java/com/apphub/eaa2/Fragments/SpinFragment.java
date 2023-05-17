@@ -14,19 +14,28 @@ import android.view.animation.RotateAnimation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.apphub.eaa2.Activities.MainActivity;
+import com.apphub.eaa2.Dialog.LoadingDialog;
 import com.apphub.eaa2.R;
+import com.apphub.eaa2.Utils.ApiLinks;
 import com.apphub.eaa2.databinding.FragmentSpinBinding;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 import java.util.Random;
 
 public class SpinFragment extends Fragment {
 
-    private static final String TAG = "AviralSpinPreferences";
+    private static final String TAG = "AviralAPI";
 
     public FragmentSpinBinding binding;
 
@@ -36,7 +45,8 @@ public class SpinFragment extends Fragment {
         this.mainActivity = mainActivity;
     }
 
-    final double[] sectors = {0, 0.02, 0.05, 0.01, 0.05, 0.20, 0.15, 0.25, 0.01, 0.05, 0.10, 100};
+    // 100 = Jackpot
+    final double[] sectors = {0.10, 0, 0.02, 0.05, 0.01, 0.05, 0.20, 100, 0.15, 0.25, 0.01, 0.05};
     final int[] sectorsDegree = new int[sectors.length];
 
     int randomSectorIndex = 0;
@@ -47,6 +57,8 @@ public class SpinFragment extends Fragment {
     private int chancesLeft;
 
     private double earnedAmount;
+
+    private LoadingDialog loadingDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -61,9 +73,11 @@ public class SpinFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loadingDialog = new LoadingDialog(requireContext());
+
         getChances();
 
-        binding.btnSpin.setOnClickListener(slideToActView -> startSpin());
+        binding.btnSpin.setOnClickListener(view1 -> startSpin());
 
         binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
     }
@@ -82,7 +96,7 @@ public class SpinFragment extends Fragment {
         if (chancesLeft == 0) {
             binding.btnSpin.setClickable(false);
 
-            Log.d(TAG, "getChances: Into if of getChanses()");
+            Log.d(TAG, "getChances: Into if of getChances()");
 
             timerUtils();
         }
@@ -128,15 +142,18 @@ public class SpinFragment extends Fragment {
             public void onAnimationEnd(Animation animation) {
                 earnedAmount = sectors[sectors.length - (randomSectorIndex + 1)];
 
-//                binding.usernameBalance.setText(String.format("₹%s",
-//                        roundOfNumber(Double.parseDouble(String.valueOf(mainActivity.getBalance()))
-//                                + earnedAmount)));
-
                 decrementChances();
 
-//                updateUserBalance(earnedAmount);
+                getChances();
+
+                updateUserBalance(earnedAmount);
 
                 spinning = false;
+
+                binding.spinningWheel.setImageDrawable(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_spining_wheel));
+
+                binding.btnSpin.setOnClickListener(view1 -> startSpin());
+
             }
 
             @Override
@@ -203,7 +220,6 @@ public class SpinFragment extends Fragment {
             Log.d(TAG, "timerUtils: startTime inside counter: " + startTime);
             Log.d(TAG, "timerUtils: endTime inside counter: " + endTime);
 
-
             CountDownTimer countDownTimer = new CountDownTimer(endTime - startTime, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -249,7 +265,7 @@ public class SpinFragment extends Fragment {
         SharedPreferences sharedPreferences = mainActivity.getSharedPreferences("spinChances", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putLong("chancesLeft", 20);
+        editor.putInt("chancesLeft", 20);
         editor.apply();
 
         getChances();
@@ -265,5 +281,47 @@ public class SpinFragment extends Fragment {
         for (int i = 0; i < sectors.length; i++) {
             sectorsDegree[i] = (i + 1) * sectorDegree;
         }
+    }
+
+    private void updateUserBalance(double value){
+        String uid = mainActivity.getSharedPreferences("user", Context.MODE_PRIVATE).getString("uid", "");
+        String balance_add = String.valueOf(value);
+
+        AndroidNetworking.post(ApiLinks.UPDATE_USER_BALANCE)
+                .addBodyParameter("user_id", uid)
+                .addBodyParameter("value", balance_add)
+                .build().getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, "onResponse: Response in Adapter: " + response);
+
+                        try {
+
+                            String status = response.getString("status");
+
+                            if (status.equals("updated")){
+
+                                Log.d(TAG, "onResponse: User Balance Updated");
+
+                                mainActivity.getUserBalance();
+                                loadingDialog.dismiss();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "onResponse: Exception while updating user balance: " + e.getMessage());
+                            loadingDialog.dismiss();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d(TAG, "onResponse: Error while updating user balance: " + anError.getMessage());
+                        loadingDialog.dismiss();
+                    }
+                });
+
     }
 }

@@ -2,7 +2,6 @@ package com.apphub.eaa2.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -27,6 +26,7 @@ import com.apphub.eaa2.R;
 import com.apphub.eaa2.Utils.ApiLinks;
 import com.apphub.eaa2.Utils.TimeUtils;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +36,8 @@ import java.util.ArrayList;
 public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHolder>{
 
     private static final String TAG = "AviralAPI";
+
+    private final int TOTAL_CHANCES = 30;
 
     private final ArrayList<Options> optionList;
     private final MainActivity mainActivity;
@@ -71,7 +73,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
                 optionList.get(position).getOptionEarningAmount()
         ));
 
-        Log.d(TAG, "onBindViewHolder: Chances: " + chances.getCandyCrushChances());
+        Log.d(TAG, "onBindViewHolder: Chances in adapter: " + optionList.get(position).getChancesLeft());
 
         Glide.with(holder.itemView.getContext())
                 .load(optionList.get(position).getOptionImage())
@@ -91,6 +93,16 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
             });
         } else {
+
+            holder.optionButton.setBackground(AppCompatResources.getDrawable(
+                    mainActivity, R.drawable.btn_grey_get_background
+            ));
+
+            holder.optionButton.setOnClickListener(view -> Snackbar.make(
+                    holder.itemView,
+                    "All chances for this reward are finished. Please wait for some time",
+                    Snackbar.LENGTH_SHORT
+            ).show());
 
             checkForChancesRenewal(holder.optionButton);
 
@@ -145,7 +157,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
                 candyCrushEditor.putInt(
                         mainActivity.getString(R.string.chances_left),
-                        30
+                        TOTAL_CHANCES
                 );
 
                 candyCrushEditor.apply();
@@ -184,7 +196,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
                             (chances.getCandyCrushChances() - 1)
                     );
 
-                    optionList.get(position).setChancesLeft(chances.getCandyCrushChances() - 1);
+                    optionList.get(position).setChancesLeft(optionList.get(position).getChancesLeft() - 1);
 
                 } else {
 
@@ -217,12 +229,9 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
     private void toggleView(TextView optionButton) {
 
-        optionButton.setBackgroundColor(Color.parseColor("#707070"));
-
-        optionButton.setOnClickListener(view -> Toast.makeText(
-                mainActivity,
-                "All chances for this reward are finished. Please wait for some time",
-                Toast.LENGTH_SHORT).show());
+        optionButton.setBackground(AppCompatResources.getDrawable(
+                mainActivity, R.drawable.btn_get_background
+        ));
 
         loadingDialog.dismiss();
 
@@ -234,7 +243,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
         itemView.startAnimation(animation);
     }
 
-    public void updateUserBalance(double value){
+    private void updateUserBalance(double value){
         String uid = mainActivity.getSharedPreferences("user", Context.MODE_PRIVATE).getString("uid", "");
         String balance_add = String.valueOf(value);
 
@@ -273,6 +282,8 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
                         loadingDialog.dismiss();
                     }
                 });
+
+        loadingDialog.dismiss();
 
     }
 
