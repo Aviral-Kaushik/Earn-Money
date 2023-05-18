@@ -43,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private ActivitySignupBinding binding;
     private LoadingDialog loadingDialog;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,7 +250,7 @@ public class SignupActivity extends AppCompatActivity {
         String name = account.getDisplayName();
         String email = account.getEmail();
         String uid = RandomAlphaNumericGenerator.generateAlphaNumeric(10);
-        String token = TokenPreference.getInstance(this).getDeviceToken();
+        String token = TokenPreference.getInstance(getApplication()).getDeviceToken();
         String password = PasswordEncrypt.encrypt(name + email);
         String referCode = RandomAlphaNumericGenerator.generateAlphaNumeric(6).toUpperCase();
         String referredBy = "-";

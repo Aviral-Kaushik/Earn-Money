@@ -147,9 +147,9 @@
                     android:id="@+id/scratch_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:overlay_height="280dp"
+                    app:overlay_height="290dp"
                     app:overlay_image="@drawable/ic_scratch_card"
-                    app:overlay_width="290dp"
+                    app:overlay_width="280dp"
                     android:layout_gravity="bottom"/>
 
             </androidx.cardview.widget.CardView>
