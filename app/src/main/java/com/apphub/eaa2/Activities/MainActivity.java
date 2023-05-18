@@ -46,6 +46,25 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     public Fragment activeFragment = homeFragment;
 
+    double balance;
+    String name;
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getUsername() {
+        return name;
+    }
+
+    public void setUsername(String name) {
+        this.name = name;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                             profileFragment.binding.username.setText(name);
                             referFragment.binding.referralCode.setText(referralCode);
 
+                            setUsername(name);
+
                             Log.d(TAG, "onResponse: Adding user data in Shared Preference");
 
                             SharedPreferences sharedPreferences1 = getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -184,7 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
                             float balance = (float) response.getDouble("balance");
 
-                            String balance_text = "₹"+String.format(Locale.US, "%.2f", balance);
+                            String balance_text = "$"+String.format(Locale.US, "%.2f", balance);
+
+                            setBalance(balance);
 
                             homeFragment.binding.usernamePrice.setText(balance_text);
                             profileFragment.binding.userBalance.setText(balance_text);

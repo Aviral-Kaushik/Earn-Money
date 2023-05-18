@@ -7,6 +7,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +17,34 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.anupkumarpanwar.scratchview.ScratchView;
 import com.apphub.eaa2.Activities.MainActivity;
+import com.apphub.eaa2.Dialog.LoadingDialog;
+import com.apphub.eaa2.R;
+import com.apphub.eaa2.Utils.ApiLinks;
 import com.apphub.eaa2.databinding.FragmentScratchCardBinding;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 
 public class ScratchCardFragment extends Fragment {
 
-    private static final String TAG = "AviralPreferences";
+    private static final String TAG = "AviralAPI";
 
     public FragmentScratchCardBinding binding;
     private final MainActivity mainActivity;
     private int chancesLeft;
+    private LoadingDialog loadingDialog;
+    private double wonAmount;
+    private double lower;
+    private double upper;
+
     public ScratchCardFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
@@ -46,7 +62,15 @@ public class ScratchCardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loadingDialog = new LoadingDialog(requireContext());
+
         getChances();
+
+        lower = 0.10;
+        upper = 0.50;
+
+        wonAmount = Math.random() * (upper - lower) + lower;
+        binding.rewardWon.setText(String.format("$%s", String.format(Locale.US, "%.2f", wonAmount)));
 
         binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
 
@@ -54,15 +78,20 @@ public class ScratchCardFragment extends Fragment {
             @Override
             public void onRevealed(ScratchView scratchView) {
 
-//                binding.usernameBalance.setText(String.format("₹%s",
-//                        roundOfNumber(Double.parseDouble(String.valueOf(mainActivity.getBalance()))
-//                                + earnedAmount)));
-
                 binding.scratchView.reveal();
 
                 decrementChances();
 
-//                updateUserBalance(earnedAmount);
+                updateUserBalance(wonAmount);
+
+                new Handler().postDelayed(()-> {
+
+                    binding.scratchView.setRevealListener(this);
+
+                    binding.scratchView.clear();
+                    binding.scratchView.mask();
+
+                }, 600);
 
             }
 
@@ -92,33 +121,21 @@ public class ScratchCardFragment extends Fragment {
             binding.chances.setText(String.valueOf(chancesLeft - 1));
 
             if (chancesLeft == 0) {
+
+                binding.scratchView.setVisibility(View.INVISIBLE);
+                binding.scratchCardBack.setVisibility(View.INVISIBLE);
+                binding.tvScratchCardDescription.setVisibility(View.INVISIBLE);
+                binding.linearLayoutChances.setVisibility(View.INVISIBLE);
+
+                binding.ivNoRewards.setVisibility(View.VISIBLE);
+                binding.tvRewards.setText(R.string.rewards_completed);
+
+                binding.linearLayoutTime.setVisibility(View.VISIBLE);
+
                 timerUtils();
             }
         }
 
-        getChances();
-
-    }
-
-    private void getChances() {
-        SharedPreferences chancesPreferences = mainActivity.getSharedPreferences("scratchChances", Context.MODE_PRIVATE);
-        chancesLeft = chancesPreferences.getInt("chancesLeft", 20);
-
-        binding.chances.setText(String.valueOf(chancesLeft));
-
-        if (chancesLeft == 0) {
-
-            binding.scratchView.setVisibility(View.INVISIBLE);
-            binding.scratchCardBack.setVisibility(View.INVISIBLE);
-            binding.tvScratchCardDescription.setVisibility(View.INVISIBLE);
-            binding.ivNoRewards.setVisibility(View.VISIBLE);
-            binding.tvRewards.setText("Rewards Completed.");
-
-            binding.linearLayoutChances.setVisibility(View.INVISIBLE);
-            binding.linearLayoutTime.setVisibility(View.VISIBLE);
-
-            timerUtils();
-        }
     }
 
     private void timerUtils() {
@@ -165,14 +182,12 @@ public class ScratchCardFragment extends Fragment {
                     minutes = minutes % 60;
                     seconds = seconds % 60;
                     String time = String.format(Locale.US,"%02d:%02d:%02d", hours, minutes, seconds);
-                    // Update the UI with the remaining time
+
                     binding.timeLeft.setText(time);
                 }
 
                 @Override
                 public void onFinish() {
-                    // Handle the timer finish event
-                    // This will be called when the countdown is finished
 
                     getChances();
 
@@ -193,8 +208,6 @@ public class ScratchCardFragment extends Fragment {
 
         } else {
 
-            getChances();
-
             binding.linearLayoutTime.setVisibility(View.GONE);
             binding.scratchView.setVisibility(View.VISIBLE);
             binding.scratchCardBack.setVisibility(View.VISIBLE);
@@ -210,11 +223,100 @@ public class ScratchCardFragment extends Fragment {
 
     }
 
+    private void getChances() {
+        SharedPreferences chancesPreferences = mainActivity.getSharedPreferences("scratchChances", Context.MODE_PRIVATE);
+        chancesLeft = chancesPreferences.getInt("chancesLeft", 20);
+
+        binding.chances.setText(String.valueOf(chancesLeft));
+
+        if (chancesLeft == 0) {
+
+            binding.scratchView.setVisibility(View.INVISIBLE);
+            binding.scratchCardBack.setVisibility(View.INVISIBLE);
+            binding.tvScratchCardDescription.setVisibility(View.INVISIBLE);
+            binding.linearLayoutChances.setVisibility(View.INVISIBLE);
+
+            binding.ivNoRewards.setVisibility(View.VISIBLE);
+            binding.tvRewards.setText(R.string.rewards_completed);
+
+            binding.linearLayoutTime.setVisibility(View.VISIBLE);
+
+            timerUtils();
+        }
+    }
+
     private void refreshChances() {
         SharedPreferences sharedPreferences = mainActivity.getSharedPreferences("scratchChances", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putLong("chancesLeft", 20);
+        editor.putInt("chancesLeft", 20);
         editor.apply();
+    }
+
+    private void updateUserBalance(double value){
+
+        loadingDialog = new LoadingDialog(requireContext());
+        loadingDialog.show();
+
+        String uid = mainActivity.getSharedPreferences("user", Context.MODE_PRIVATE).getString("uid", "");
+        String balance_add = String.valueOf(value);
+
+        AndroidNetworking.post(ApiLinks.UPDATE_USER_BALANCE)
+                .addBodyParameter("user_id", uid)
+                .addBodyParameter("value", balance_add)
+                .build().getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, "onResponse: Response in Adapter: " + response);
+
+                        try {
+
+                            String status = response.getString("status");
+
+                            if (status.equals("updated")){
+
+                                Log.d(TAG, "onResponse: User Balance Updated");
+
+                                mainActivity.getUserBalance();
+                                loadingDialog.dismiss();
+
+                                wonAmount = Math.random() * (upper - lower) + lower;
+                                binding.rewardWon.setText(String.format("$%s", String.format(Locale.US, "%.2f", wonAmount)));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                            Log.d(TAG, "onResponse: Exception while updating user balance: " + e.getMessage());
+
+                            loadingDialog.dismiss();
+
+                            Snackbar.make(
+                                    binding.layoutScratch,
+                                    "Cannot Update your balance at this moment",
+                                    Snackbar.LENGTH_SHORT
+                            ).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                        Log.d(TAG, "onResponse: Error while updating user balance: " + anError.getMessage());
+
+                        loadingDialog.dismiss();
+
+                        Snackbar.make(
+                                binding.layoutScratch,
+                                "Server Error! Please try again later",
+                                Snackbar.LENGTH_SHORT
+                        ).show();
+
+                    }
+                });
+
+        loadingDialog.dismiss();
+
     }
 }

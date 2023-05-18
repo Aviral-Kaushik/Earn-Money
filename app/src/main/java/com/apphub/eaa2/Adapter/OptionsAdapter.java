@@ -89,7 +89,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
                 decrementChances(optionList.get(position).getOptionTitle(), position);
 
-                updateUserBalance(optionList.get(position).getOptionEarningAmount());
+                updateUserBalance(optionList.get(position).getOptionEarningAmount(), holder);
 
             });
         } else {
@@ -243,7 +243,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
         itemView.startAnimation(animation);
     }
 
-    private void updateUserBalance(double value){
+    private void updateUserBalance(double value, ViewHolder holder){
         String uid = mainActivity.getSharedPreferences("user", Context.MODE_PRIVATE).getString("uid", "");
         String balance_add = String.valueOf(value);
 
@@ -270,8 +270,16 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+
                             Log.d(TAG, "onResponse: Exception while updating user balance: " + e.getMessage());
+
                             loadingDialog.dismiss();
+
+                            Snackbar.make(
+                                    holder.itemView,
+                                    "Cannot Update your balance at this moment",
+                                    Snackbar.LENGTH_SHORT
+                            ).show();
                         }
 
                     }
@@ -280,6 +288,12 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
                     public void onError(ANError anError) {
                         Log.d(TAG, "onResponse: Error while updating user balance: " + anError.getMessage());
                         loadingDialog.dismiss();
+
+                        Snackbar.make(
+                                holder.itemView,
+                                "Server Error! Please try again later",
+                                Snackbar.LENGTH_SHORT
+                        ).show();
                     }
                 });
 

@@ -310,8 +310,16 @@ public class SpinFragment extends Fragment {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+
                             Log.d(TAG, "onResponse: Exception while updating user balance: " + e.getMessage());
+
                             loadingDialog.dismiss();
+
+                            Snackbar.make(
+                                    binding.spinLayout,
+                                    "Cannot Update your balance at this moment",
+                                    Snackbar.LENGTH_SHORT
+                            ).show();
                         }
 
                     }
@@ -319,7 +327,14 @@ public class SpinFragment extends Fragment {
                     @Override
                     public void onError(ANError anError) {
                         Log.d(TAG, "onResponse: Error while updating user balance: " + anError.getMessage());
+
                         loadingDialog.dismiss();
+
+                        Snackbar.make(
+                                binding.spinLayout,
+                                "Server Error! Please try again later",
+                                Snackbar.LENGTH_SHORT
+                        ).show();
                     }
                 });
 

@@ -92,4 +92,6 @@
     <string name="cancy_crush_reward">Candy Crush Reward</string>
     <string name="candy_crush_time">candyCrushTime</string>
     <string name="rewards_completed">Rewards Completed.</string>
+    <string name="intent_extra_name">name</string>
+    <string name="intent_extra_balance">balance</string>
 </resources>

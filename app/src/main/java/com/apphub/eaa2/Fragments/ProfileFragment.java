@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.apphub.eaa2.Activities.MainActivity;
 import com.apphub.eaa2.Activities.WithdrawActivity;
+import com.apphub.eaa2.R;
 import com.apphub.eaa2.databinding.FramentProfileBinding;
 
 public class ProfileFragment extends Fragment {
@@ -40,7 +41,12 @@ public class ProfileFragment extends Fragment {
 
         binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
 
-        binding.myBalance.setOnClickListener(view1 -> mainActivity.startActivity(new Intent(mainActivity, WithdrawActivity.class)));
+        binding.myBalance.setOnClickListener(view1 -> {
+            Intent intent = new Intent(mainActivity, WithdrawActivity.class);
+            intent.putExtra(mainActivity.getString(R.string.intent_extra_name), mainActivity.getUsername());
+            intent.putExtra(mainActivity.getString(R.string.intent_extra_balance), mainActivity.getBalance());
+            mainActivity.startActivity(intent);
+        });
 
         binding.invite.setOnClickListener(view1 -> mainActivity.showReferFragment());
     }
