@@ -10,6 +10,8 @@ import com.apphub.eaa2.R;
 import com.apphub.eaa2.databinding.ActivityWithdrawBinding;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Locale;
+
 public class WithdrawActivity extends AppCompatActivity {
 
     private ActivityWithdrawBinding binding;
@@ -18,11 +20,27 @@ public class WithdrawActivity extends AppCompatActivity {
             isPaypalSelected = false,
             isBankSelected = false;
 
+    private double balance;
+
+    private String paymentMode = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityWithdrawBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(getString(R.string.intent_extra_name))) {
+            String name = intent.getStringExtra(getString(R.string.intent_extra_name));
+            balance = intent.getDoubleExtra(getString(R.string.intent_extra_balance), 0.00);
+
+            binding.username.setText(name);
+            binding.userBalance.setText(String.format(Locale.US ,"$%.2f", balance));
+        }
+
+        binding.btnCancel.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
 
         binding.icBack.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
 
@@ -31,6 +49,8 @@ public class WithdrawActivity extends AppCompatActivity {
             resetAllPaymentMethods();
 
             isPaypalSelected = true;
+
+            paymentMode = "Paypal";
 
             binding.paypalCheck.setVisibility(View.VISIBLE);
 
@@ -42,6 +62,8 @@ public class WithdrawActivity extends AppCompatActivity {
 
             isPaytmSelected = true;
 
+            paymentMode = "Paytm";
+
             binding.paytmCheck.setVisibility(View.VISIBLE);
 
         });
@@ -51,6 +73,8 @@ public class WithdrawActivity extends AppCompatActivity {
             resetAllPaymentMethods();
 
             isBankSelected = true;
+
+            paymentMode = "Bank";
 
             binding.bankCheck.setVisibility(View.VISIBLE);
 
@@ -73,20 +97,22 @@ public class WithdrawActivity extends AppCompatActivity {
 
     private void navigateToPaymentActivity() {
 
-        String paymentMode = "";
-
-        if (isPaypalSelected) {
-            paymentMode = "Paypal";
-        } else if (isPaytmSelected) {
-            paymentMode = "Paytm";
-        } else if (isBankSelected) {
-            paymentMode = "Bank";
-        }
-
         if ((isPaytmSelected || isPaypalSelected || isBankSelected) && !(paymentMode.equals(""))) {
-            Intent intent = new Intent(this, PaymentActivity.class);
-            intent.putExtra(getString(R.string.payment_mode), paymentMode);
-            startActivity(intent);
+
+            if (balance >= 100) {
+                Intent intent = new Intent(this, PaymentActivity.class);
+                intent.putExtra(getString(R.string.payment_mode), paymentMode);
+                intent.putExtra(getString(R.string.intent_extra_balance), balance);
+                startActivity(intent);
+            } else {
+                Snackbar.make(
+                        binding.withdrawLayout,
+                        "Minimum withdraw amount is $100",
+                        Snackbar.LENGTH_SHORT
+                ).show();
+            }
+
+
         } else {
             Snackbar.make(
                     binding.withdrawLayout,

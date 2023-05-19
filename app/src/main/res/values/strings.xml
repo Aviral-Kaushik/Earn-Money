@@ -94,4 +94,5 @@
     <string name="rewards_completed">Rewards Completed.</string>
     <string name="intent_extra_name">name</string>
     <string name="intent_extra_balance">balance</string>
+    <string name="name">Name</string>
 </resources>

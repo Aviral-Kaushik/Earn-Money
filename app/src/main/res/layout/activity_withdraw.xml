@@ -73,6 +73,8 @@
         android:layout_marginStart="5dp"
         android:contentDescription="@string/dummy_price"
         android:src="@drawable/ic_menu_dots"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/user_balance"
         app:layout_constraintStart_toEndOf="@id/user_balance"
         app:layout_constraintTop_toTopOf="@id/user_balance" />
@@ -116,7 +118,7 @@
         android:id="@+id/iv_arrows"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="25dp"
         android:contentDescription="@string/back"
         android:src="@drawable/ic_arrows"
         app:layout_constraintBottom_toBottomOf="@id/withdraw"
@@ -229,7 +231,7 @@
             <ImageView
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/ic_paytm"
+                android:src="@drawable/ic_paytm2"
                 android:layout_gravity="center"
                 android:contentDescription="@string/paytm"/>
 

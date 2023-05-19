@@ -43,7 +43,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private ActivitySignupBinding binding;
     private LoadingDialog loadingDialog;
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
