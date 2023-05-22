@@ -40,9 +40,9 @@ public class WithdrawActivity extends AppCompatActivity {
             binding.userBalance.setText(String.format(Locale.US ,"$%.2f", balance));
         }
 
-        binding.btnCancel.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
+        binding.btnCancel.setOnClickListener(view -> finish());
 
-        binding.icBack.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
+        binding.icBack.setOnClickListener(view -> finish());
 
         binding.paypal.setOnClickListener(view -> {
 

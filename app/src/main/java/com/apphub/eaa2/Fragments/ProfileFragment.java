@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.apphub.eaa2.Activities.MainActivity;
+import com.apphub.eaa2.Activities.PrivacyPolicyActivity;
+import com.apphub.eaa2.Activities.TermsAndConditionActivity;
 import com.apphub.eaa2.Activities.WithdrawActivity;
 import com.apphub.eaa2.R;
 import com.apphub.eaa2.databinding.FramentProfileBinding;
@@ -47,6 +49,10 @@ public class ProfileFragment extends Fragment {
             intent.putExtra(mainActivity.getString(R.string.intent_extra_balance), mainActivity.getBalance());
             mainActivity.startActivity(intent);
         });
+
+        binding.terms.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, TermsAndConditionActivity.class)));
+
+        binding.privacy.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, PrivacyPolicyActivity.class)));
 
         binding.invite.setOnClickListener(view1 -> mainActivity.showReferFragment());
     }
