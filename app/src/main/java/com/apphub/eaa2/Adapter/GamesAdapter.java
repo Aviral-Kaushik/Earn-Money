@@ -1,6 +1,8 @@
 package com.apphub.eaa2.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +49,7 @@ public class GamesAdapter extends BaseAdapter {
                     = (LayoutInflater)context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.layout_snippet_game,
-                    null);
+                    viewGroup,false);
         }
 
         ImageView gameImage = view.findViewById(R.id.game_image);
@@ -63,6 +65,11 @@ public class GamesAdapter extends BaseAdapter {
                 .into(gameImage);
 
         // Handle open link functionality here
+        view.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(gameArrayList.get(i).getLink()));
+            intent.setPackage("com.android.chrome");
+            context.startActivity(intent);
+        });
 
         return view;
     }

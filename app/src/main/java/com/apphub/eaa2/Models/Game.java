@@ -2,7 +2,7 @@ package com.apphub.eaa2.Models;
 
 public class Game {
 
-    private int image;
+    private String image;
 
     private String gameName;
 
@@ -10,18 +10,18 @@ public class Game {
 
     private String link;
 
-    public Game(int image, String gameName, String gameCoins, String link) {
+    public Game(String image, String gameName, String gameCoins, String link) {
         this.image = image;
         this.gameName = gameName;
         this.gameCoins = gameCoins;
         this.link = link;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

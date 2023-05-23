@@ -10,6 +10,7 @@ public class ApiLinks {
     public static final String REGISTER = BASE_URL + "apps/register.php";
     public static final String LOGIN = BASE_URL + "apps/login.php";
     public static final String UPDATE_USER_TOKEN = BASE_URL + "token/update_user_token.php";
+    public static String GET_GAMES = BASE_URL + "apps/getRandomGame.php";
 
     public static final String GET_USER_COINS = BASE_URL + "apps/get_user_balance.php";
     public static final String UPDATE_USER_BALANCE = BASE_URL + "apps/update_user_balance.php";
@@ -19,8 +20,8 @@ public class ApiLinks {
     public static final String TC = BASE_URL + "tc.html";
 
     public static String WITHDRAW_REQUEST = BASE_URL + "withdraw/v2/add_withdraw.php";
-    public static String LIST_REFER_FRIENDS = BASE_URL + "apps/list_refer_friends.php";
 
     public static String GET_LINKS = BASE_URL + "/Links/getLinks.php";
+
 
 }

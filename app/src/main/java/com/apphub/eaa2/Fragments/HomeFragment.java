@@ -75,7 +75,13 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.banner.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, GamesActivity.class)));
+        binding.banner.setOnClickListener(view1 -> {
+
+            Intent intent = new Intent(mainActivity, GamesActivity.class);
+            intent.putExtra("balance", binding.usernamePrice.getText().toString());
+            startActivity(intent);
+
+        });
     }
 
     private void setUpOptionAdapter() {
@@ -86,7 +92,7 @@ public class HomeFragment extends Fragment {
         ArrayList<Options> optionsArrayList = new ArrayList<>();
 
         optionsArrayList.add(new Options(
-                R.drawable.ic_candy_crush,
+                R.drawable.ic_candy_crush2,
                 requireContext().getString(R.string.candy_crush),
                 requireContext().getString(R.string.options_desc),
                 0.23,
@@ -94,7 +100,7 @@ public class HomeFragment extends Fragment {
         ));
 
         optionsArrayList.add(new Options(
-                R.drawable.ic_candy_crush,
+                R.drawable.ic_candy_crush2,
                 requireContext().getString(R.string.candy_crush),
                 requireContext().getString(R.string.options_desc),
                 0.23,
@@ -102,7 +108,7 @@ public class HomeFragment extends Fragment {
         ));
 
         optionsArrayList.add(new Options(
-                R.drawable.ic_candy_crush,
+                R.drawable.ic_candy_crush2,
                 requireContext().getString(R.string.candy_crush),
                 requireContext().getString(R.string.options_desc),
                 0.23,
@@ -110,7 +116,7 @@ public class HomeFragment extends Fragment {
         ));
 
         optionsArrayList.add(new Options(
-                R.drawable.ic_candy_crush,
+                R.drawable.ic_candy_crush2,
                 requireContext().getString(R.string.candy_crush),
                 requireContext().getString(R.string.options_desc),
                 0.23,

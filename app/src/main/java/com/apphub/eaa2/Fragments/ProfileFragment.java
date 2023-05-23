@@ -1,6 +1,8 @@
 package com.apphub.eaa2.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.apphub.eaa2.Activities.LoginActivity;
 import com.apphub.eaa2.Activities.MainActivity;
 import com.apphub.eaa2.Activities.PrivacyPolicyActivity;
 import com.apphub.eaa2.Activities.TermsAndConditionActivity;
@@ -53,6 +56,28 @@ public class ProfileFragment extends Fragment {
         binding.terms.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, TermsAndConditionActivity.class)));
 
         binding.privacy.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, PrivacyPolicyActivity.class)));
+
+        binding.logout.setOnClickListener(view1 -> {
+
+            SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(mainActivity.getString(R.string.check_shared_preferences), Context.MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+            myEdit.putBoolean("isLoggedIn", false);
+            myEdit.putString("email", "");
+
+            myEdit.apply();
+
+            SharedPreferences sharedPreferences1 = mainActivity.getSharedPreferences("user", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences1.edit();
+
+            editor.clear();
+
+            editor.apply();
+
+            startActivity(new Intent(mainActivity, LoginActivity.class));
+
+        });
+
 
         binding.invite.setOnClickListener(view1 -> mainActivity.showReferFragment());
     }
