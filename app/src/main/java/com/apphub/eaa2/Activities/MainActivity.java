@@ -1,11 +1,14 @@
 package com.apphub.eaa2.Activities;
 
+import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,9 @@ import com.apphub.eaa2.Fragments.SpinFragment;
 import com.apphub.eaa2.R;
 import com.apphub.eaa2.Utils.ApiLinks;
 import com.apphub.eaa2.databinding.ActivityMainBinding;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONException;
@@ -114,6 +120,60 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     }
 
+    private void setUpUserProfilePhoto() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        boolean isGoogleLogin = sharedPreferences.getBoolean(getString(R.string.isGoogleLogin), false);
+
+        if (isGoogleLogin) {
+
+            String photoUrl = sharedPreferences.getString(getString(R.string.photoUrl), "");
+
+            Log.d(TAG, "mainActivity: photoUrl: " + photoUrl);
+
+            homeFragment.binding.userProfilePicture.setVisibility(View.GONE);
+            profileFragment.binding.userProfilePicture.setVisibility(View.GONE);
+
+            Glide.with(this)
+                    .load(photoUrl)
+                    .override(SIZE_ORIGINAL, SIZE_ORIGINAL)
+                    .apply(new RequestOptions()
+                            .fitCenter()
+                            .format(DecodeFormat.PREFER_ARGB_8888)
+                            .override(SIZE_ORIGINAL))
+                    .dontTransform()
+                    .into(homeFragment.binding.circleUserProfilePicture);
+
+            Glide.with(this)
+                    .load(photoUrl)
+                    .override(SIZE_ORIGINAL, SIZE_ORIGINAL)
+                    .apply(new RequestOptions()
+                            .fitCenter()
+                            .format(DecodeFormat.PREFER_ARGB_8888)
+                            .override(SIZE_ORIGINAL))
+                    .dontTransform()
+                    .into(profileFragment.binding.circleUserProfilePicture);
+
+        } else {
+
+            homeFragment.binding.circleUserProfilePicture.setVisibility(View.GONE);
+            profileFragment.binding.circleUserProfilePicture.setVisibility(View.GONE);
+
+            homeFragment.binding.userProfilePicture.setVisibility(View.VISIBLE);
+            profileFragment.binding.userProfilePicture.setVisibility(View.VISIBLE);
+
+            homeFragment.binding.userProfilePicture.setAvatarInitials(getUsername().substring(0, 1).toUpperCase());
+
+            profileFragment.binding.userProfilePicture.setAvatarInitials(getUsername().substring(0, 1).toUpperCase());
+
+
+
+        }
+
+
+    }
+
     private void getUserData() {
 
         SharedPreferences sharedPreferences = getSharedPreferences(
@@ -172,6 +232,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
                             getUserBalance();
 
+                            setUpUserProfilePhoto();
+
                         } catch (JSONException e) {
                             e.getMessage();
                             Log.d(TAG, "onResponse: Ecxception while fetching user data in main activity: " + e.getMessage());
@@ -205,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
                             float balance = (float) response.getDouble("balance");
 
-                            String balance_text = "$"+String.format(Locale.US, "%.2f", balance);
+                            String balance_text = "$" + String.format(Locale.US, "%.2f", balance);
 
                             setBalance(balance);
 

@@ -25,8 +25,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <io.getstream.avatarview.AvatarView
                     android:id="@+id/user_profile_picture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_dummy_pp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    app:avatarViewBorderColor="@color/white"
+                    app:avatarViewBorderWidth="3dp"
+                    app:avatarViewInitialsTextColor="#E97208"
+                    app:avatarViewInitialsBackgroundColor="#FFF0E3"
+                    app:avatarViewShape="circle"
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circle_user_profile_picture"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_dummy_pp"
@@ -43,10 +60,10 @@
                     android:fontFamily="@font/inter_semi_bold"
                     android:textSize="17sp"
                     android:textColor="#CC000000"
-                    app:layout_constraintStart_toEndOf="@id/user_profile_picture"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="25dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginStart="75dp"/>
 
                 <TextView
                     android:id="@+id/username_price"
@@ -73,7 +90,7 @@
                     android:layout_marginEnd="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/user_profile_picture"/>
+                    app:layout_constraintTop_toBottomOf="@id/username_price"/>
 
                 <LinearLayout
                     android:layout_marginTop="10dp"

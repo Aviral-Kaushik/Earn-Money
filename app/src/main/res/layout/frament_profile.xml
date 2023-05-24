@@ -365,8 +365,27 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <io.getstream.avatarview.AvatarView
         android:id="@+id/user_profile_picture"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_dummy_pp"
+        android:layout_marginTop="150dp"
+        android:layout_marginStart="15dp"
+        app:avatarViewBorderColor="@color/white"
+        app:avatarViewBorderWidth="3dp"
+        app:avatarViewInitialsTextColor="#E97208"
+        app:avatarViewInitialsBackgroundColor="#FFF0E3"
+        app:avatarViewShape="circle"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profile_card" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_user_profile_picture"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:src="@drawable/ic_dummy_pp"
@@ -375,6 +394,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/profile_card" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

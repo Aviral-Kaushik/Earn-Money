@@ -34,6 +34,7 @@ android {
 
 dependencies {
 
+    implementation "io.getstream:avatarview-coil:1.0.7"
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
     implementation 'com.github.AnupKumarPanwar:ScratchView:1.9.1'

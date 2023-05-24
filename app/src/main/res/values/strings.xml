@@ -95,4 +95,6 @@
     <string name="intent_extra_name">name</string>
     <string name="intent_extra_balance">balance</string>
     <string name="name">Name</string>
+    <string name="isGoogleLogin">isGoogleLogin</string>
+    <string name="photoUrl">photoUrl</string>
 </resources>

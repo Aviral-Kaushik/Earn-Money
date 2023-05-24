@@ -44,6 +44,10 @@ public class SignupActivity extends AppCompatActivity {
     private ActivitySignupBinding binding;
     private LoadingDialog loadingDialog;
 
+    private boolean isGoogleLogin = false;
+
+    private String photoUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +156,8 @@ public class SignupActivity extends AppCompatActivity {
 
                             if (message.equals("Registered")) {
 
+                                isGoogleLogin = true;
+
                                 addUserDataToSharedPreferences(email);
 
                             } else if (message.equals("Email Not Registered")) {
@@ -256,6 +262,8 @@ public class SignupActivity extends AppCompatActivity {
         String model = Build.MODEL;
         String brand = Build.BRAND;
 
+        photoUrl = String.valueOf(account.getPhotoUrl());
+
         AndroidNetworking.post(ApiLinks.REGISTER)
                 .addBodyParameter("name", name)
                 .addBodyParameter("email", email)
@@ -284,6 +292,8 @@ public class SignupActivity extends AppCompatActivity {
                                         "Registration Successful",
                                         Snackbar.LENGTH_SHORT
                                 ).show();
+
+                                isGoogleLogin = true;
 
                                 addUserDataToSharedPreferences(email);
                             }
@@ -426,11 +436,19 @@ public class SignupActivity extends AppCompatActivity {
                             editor.putFloat("refer_earning", (float) refer_earning);
                             editor.putFloat("lifetime", (float) lifetime);
                             editor.putString("is_rewarded", is_rewarded);
+                            editor.putBoolean("isGoogleLogin", isGoogleLogin);
+
+                            if (isGoogleLogin) {
+                                editor.putString(getString(R.string.photoUrl), photoUrl);
+                            }
+
                             editor.apply();
 
                             loadingDialog.dismiss();
 
-                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                            intent.putExtra(getString(R.string.isGoogleLogin), isGoogleLogin);
+                            startActivity(intent);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

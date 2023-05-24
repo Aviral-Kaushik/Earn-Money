@@ -1,13 +1,17 @@
 package com.apphub.eaa2.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.apphub.eaa2.R;
 import com.apphub.eaa2.databinding.ActivityWithdrawBinding;
+import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
@@ -29,6 +33,8 @@ public class WithdrawActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityWithdrawBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setUpUserProfilePhoto();
 
         Intent intent = getIntent();
 
@@ -81,6 +87,51 @@ public class WithdrawActivity extends AppCompatActivity {
         });
 
         binding.btnConfirm.setOnClickListener(view -> navigateToPaymentActivity());
+    }
+
+    private void setUpUserProfilePhoto() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        boolean isGoogleLogin = sharedPreferences.getBoolean(getString(R.string.isGoogleLogin), false);
+
+        String name = sharedPreferences.getString("name", "AAAA");
+
+        if (isGoogleLogin) {
+
+            String photoUrl = sharedPreferences.getString(getString(R.string.photoUrl), "");
+
+            Log.d("AviralAPI", "withdraw: photoUrl: " + photoUrl);
+
+            binding.userProfilePicture.setVisibility(View.GONE);
+            binding.userProfilePicture.setVisibility(View.GONE);
+
+            Glide.with(this)
+                    .load(photoUrl)
+                    .encodeQuality(100)
+                    .into(binding.circleUserProfilePicture);
+
+            Glide.with(this)
+                    .load(photoUrl)
+                    .encodeQuality(100)
+                    .into(binding.circleUserProfilePicture);
+
+        } else {
+
+            binding.circleUserProfilePicture.setVisibility(View.GONE);
+            binding.circleUserProfilePicture.setVisibility(View.GONE);
+
+            binding.userProfilePicture.setVisibility(View.VISIBLE);
+            binding.userProfilePicture.setVisibility(View.VISIBLE);
+
+            binding.userProfilePicture.setAvatarInitials(name.substring(0, 1).toUpperCase());
+
+            binding.userProfilePicture.setAvatarInitials(name.substring(0, 1).toUpperCase());
+
+
+        }
+
+
     }
 
     private void resetAllPaymentMethods() {

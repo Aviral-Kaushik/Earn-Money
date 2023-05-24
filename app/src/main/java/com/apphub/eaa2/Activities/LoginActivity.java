@@ -44,6 +44,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
 
+    private boolean isGoogleLogin = false;
+
+    private String photoUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +127,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = account.getEmail();
 
+        photoUrl = String.valueOf(account.getPhotoUrl());
+
         AndroidNetworking.post(ApiLinks.CHECK_EMAIL)
                 .addBodyParameter("email", email)
                 .build().getAsJSONObject(new JSONObjectRequestListener() {
@@ -139,6 +145,8 @@ public class LoginActivity extends AppCompatActivity {
                                 String token = TokenPreference.getInstance(LoginActivity.this).getDeviceToken();
 
                                 new UpdateToken(getApplicationContext()).updateToken(email, token);
+
+                                isGoogleLogin = true;
 
                                 addUserDataToSharedPreferences(email);
 
@@ -262,6 +270,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 addUserDataToSharedPreferences(email);
 
+                                isGoogleLogin = false;
+
                             } else if (message.equals("check email/password")) {
 
                                 Snackbar.make(
@@ -347,11 +357,18 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putFloat("refer_earning", (float) refer_earning);
                             editor.putFloat("lifetime", (float) lifetime);
                             editor.putString("is_rewarded", is_rewarded);
+                            editor.putBoolean("isGoogleLogin", isGoogleLogin);
+
+                            if (isGoogleLogin) {
+                                editor.putString(getString(R.string.photoUrl), photoUrl);
+                            }
                             editor.apply();
 
                             loadingDialog.dismiss();
 
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra(getString(R.string.isGoogleLogin), isGoogleLogin);
+                            startActivity(intent);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
