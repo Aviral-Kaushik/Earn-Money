@@ -14,4 +14,17 @@ public class RandomAlphaNumericGenerator {
         return stringBuilder.toString();
     }
 
+    public static String generateOTP(int length) {
+        String digits = "0123456789";
+        Random random = new Random();
+        StringBuilder otp = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(digits.length());
+            otp.append(digits.charAt(index));
+        }
+
+        return otp.toString();
+    }
+
 }
