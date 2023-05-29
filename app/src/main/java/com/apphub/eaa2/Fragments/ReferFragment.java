@@ -4,6 +4,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -55,51 +57,21 @@ public class ReferFragment extends Fragment {
                 "\n" +
                 "With our earning app, you can make money effortlessly by completing tasks and referring friends. Cash out your earnings through multiple payment channels.\n" +
                 "\n" +
-                "Sign up using my referral code" + binding.referralCode.getText().toString().toUpperCase() + "and get a bonus to start earning right away! Earnpay is a fun and easy way to make extra income. Join now and get a head start!";
+                "Sign up using my referral code " + binding.referralCode.getText().toString().toUpperCase() + " and get a bonus to start earning right away! Earnpay is a fun and easy way to make extra income. Join now and get a head start!";
     }
 
     private void sendWhatsappMessage() {
-
-        Intent intent = new Intent(Intent.ACTION_SEND);
-
-        intent.setType("text/plain");
-        intent.setPackage("com.whatsapp");
-
-
-        intent.putExtra(
-                Intent.EXTRA_TEXT,
-                getShareMessage());
-
-        if (intent.resolveActivity(mainActivity.getPackageManager()) == null) {
-
-            Snackbar snackbar = Snackbar.make(binding.inviteLayout
-                    , "Please install whatsapp",
-                    Snackbar.LENGTH_SHORT);
-            snackbar.show();
-
-        } else {
-
-            startActivity(intent);
-
-        }
-
-
+        String url = "https://api.whatsapp.com/send?text=" + getShareMessage();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 
     private void sendTelegramMessage() {
         String url = "tg://msg?text=" + getShareMessage();
-
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
-
-        if (intent.resolveActivity(mainActivity.getPackageManager()) != null) {
-            startActivity(intent);
-        } else {
-            Snackbar snackbar = Snackbar.make(binding.inviteLayout
-                    , "Please install Telegram",
-                    Snackbar.LENGTH_SHORT);
-            snackbar.show();
-        }
+        startActivity(intent);
     }
 
     private void shareIntent() {

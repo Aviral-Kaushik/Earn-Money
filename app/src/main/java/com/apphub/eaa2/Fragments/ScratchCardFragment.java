@@ -1,5 +1,6 @@
 package com.apphub.eaa2.Fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -7,11 +8,12 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,16 +26,22 @@ import com.anupkumarpanwar.scratchview.ScratchView;
 import com.apphub.eaa2.Activities.MainActivity;
 import com.apphub.eaa2.Dialog.LoadingDialog;
 import com.apphub.eaa2.R;
+import com.apphub.eaa2.Utils.AdsParameters;
 import com.apphub.eaa2.Utils.ApiLinks;
 import com.apphub.eaa2.databinding.FragmentScratchCardBinding;
 import com.google.android.material.snackbar.Snackbar;
+import com.unity3d.ads.IUnityAdsInitializationListener;
+import com.unity3d.ads.IUnityAdsLoadListener;
+import com.unity3d.ads.IUnityAdsShowListener;
+import com.unity3d.ads.UnityAds;
+import com.unity3d.ads.UnityAdsShowOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
 
-public class ScratchCardFragment extends Fragment {
+public class ScratchCardFragment extends Fragment implements IUnityAdsInitializationListener {
 
     private static final String TAG = "AviralAPI";
 
@@ -49,6 +57,61 @@ public class ScratchCardFragment extends Fragment {
         this.mainActivity = mainActivity;
     }
 
+    private final IUnityAdsLoadListener loadListener = new IUnityAdsLoadListener() {
+        @Override
+        public void onUnityAdsAdLoaded(String placementId) {
+            UnityAds.show(requireActivity(), AdsParameters.rewardedAndroidAdUnitId, new UnityAdsShowOptions(), showListener);
+        }
+
+        @Override
+        public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+            Log.d(TAG, "Unity Ads failed to load ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+    };
+
+    private final IUnityAdsShowListener showListener = new IUnityAdsShowListener() {
+        @Override
+        public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+            Log.d(TAG, "Unity Ads failed to show ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+
+        @Override
+        public void onUnityAdsShowStart(String placementId) {
+            Log.d(TAG, "onUnityAdsShowStart: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowClick(String placementId) {
+            Log.d(TAG, "onUnityAdsShowClick: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+            Log.d(TAG, "onUnityAdsShowComplete: " + placementId);
+
+        }
+    };
+
+    private void DisplayRewarded(){
+        UnityAds.load(AdsParameters.rewardedAndroidAdUnitId, loadListener);
+        UnityAds.show(mainActivity, "Rewarded_Android", new UnityAdsShowOptions(), showListener);
+    }
+
+    private void DisplayInterstitial(){
+        UnityAds.load(AdsParameters.interstitialAndroidAdUnitId, loadListener);
+        UnityAds.show(mainActivity, "Interstitial_Android", new UnityAdsShowOptions(), showListener);
+    }
+
+    @Override
+    public void onInitializationComplete() {
+        Log.d(TAG, "onInitializationComplete: Ads Initialization Complete");
+    }
+
+    @Override
+    public void onInitializationFailed(UnityAds.UnityAdsInitializationError error, String message) {
+        Log.d(TAG, "onInitializationFailed: Ads Initialization failed " + message);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +124,9 @@ public class ScratchCardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        UnityAds.initialize(requireActivity().getApplicationContext(),
+                AdsParameters.unityGameID, AdsParameters.testMode, this);
 
         loadingDialog = new LoadingDialog(requireContext());
 
@@ -78,20 +144,51 @@ public class ScratchCardFragment extends Fragment {
             @Override
             public void onRevealed(ScratchView scratchView) {
 
-                binding.scratchView.reveal();
+                if (chancesLeft == 0){
+                    binding.chances.setText(mainActivity.getString(R.string.no_chances));
+                    Toast.makeText(mainActivity, "No chances left", Toast.LENGTH_SHORT).show();
+                }
+                else{
 
-                decrementChances();
+                    binding.scratchView.reveal();
 
-                updateUserBalance(wonAmount);
+                    DisplayRewarded();
 
-                new Handler().postDelayed(()-> {
+                    Dialog dialog = new Dialog(mainActivity);
+                    dialog.setContentView(R.layout.layout_claim_dialog);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.setCancelable(false);
 
-                    binding.scratchView.setRevealListener(this);
+                    if (dialog.getWindow() != null) {
+                        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    }
 
-                    binding.scratchView.clear();
-                    binding.scratchView.mask();
+                    dialog.show();
 
-                }, 600);
+                    TextView earnAmount = dialog.findViewById(R.id.amount_won);
+                    earnAmount.setText(String.format(Locale.US, "%.2f", wonAmount));
+
+                    TextView btnCollect = dialog.findViewById(R.id.btn_collect);
+                    btnCollect.setOnClickListener(view -> {
+
+                        DisplayInterstitial();
+
+                        decrementChances();
+
+                        getChances();
+
+                        updateUserBalance(wonAmount);
+
+                        dialog.dismiss();
+
+                        binding.scratchView.setRevealListener(this);
+
+                        binding.scratchView.clear();
+                        binding.scratchView.mask();
+
+                    });
+
+                }
 
             }
 

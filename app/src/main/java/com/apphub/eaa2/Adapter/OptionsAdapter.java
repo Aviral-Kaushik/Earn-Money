@@ -1,5 +1,6 @@
 package com.apphub.eaa2.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -23,19 +24,29 @@ import com.apphub.eaa2.Dialog.LoadingDialog;
 import com.apphub.eaa2.Models.OptionChances;
 import com.apphub.eaa2.Models.Options;
 import com.apphub.eaa2.R;
+import com.apphub.eaa2.Utils.AdsParameters;
 import com.apphub.eaa2.Utils.ApiLinks;
 import com.apphub.eaa2.Utils.TimeUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
+import com.unity3d.ads.IUnityAdsInitializationListener;
+import com.unity3d.ads.IUnityAdsLoadListener;
+import com.unity3d.ads.IUnityAdsShowListener;
+import com.unity3d.ads.UnityAds;
+import com.unity3d.ads.UnityAdsShowOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHolder>{
+public class OptionsAdapter
+        extends RecyclerView.Adapter<OptionsAdapter.ViewHolder>
+        implements IUnityAdsInitializationListener {
 
     private static final String TAG = "AviralAPI";
+
+    private static final String TAG_ADD = "AviralAdsOptionsAdapter";
 
     private final int TOTAL_CHANCES = 30;
 
@@ -52,6 +63,40 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
         this.chances = chances;
     }
 
+    private final IUnityAdsLoadListener loadListener = new IUnityAdsLoadListener() {
+        @Override
+        public void onUnityAdsAdLoaded(String placementId) {
+            UnityAds.show(mainActivity, AdsParameters.rewardedAndroidAdUnitId, new UnityAdsShowOptions(), showListener);
+        }
+
+        @Override
+        public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+            Log.d(TAG_ADD, "Unity Ads failed to load ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+    };
+
+    private final IUnityAdsShowListener showListener = new IUnityAdsShowListener() {
+        @Override
+        public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+            Log.d(TAG_ADD, "Unity Ads failed to show ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+
+        @Override
+        public void onUnityAdsShowStart(String placementId) {
+            Log.d(TAG_ADD, "onUnityAdsShowStart: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowClick(String placementId) {
+            Log.d(TAG_ADD, "onUnityAdsShowClick: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+            Log.d(TAG_ADD, "onUnityAdsShowComplete: " + placementId);
+        }
+    };
+
     @NonNull
     @Override
     public OptionsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,6 +109,9 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull OptionsAdapter.ViewHolder holder, int position) {
+
+        UnityAds.initialize(mainActivity.getApplicationContext(),
+                AdsParameters.unityGameID, AdsParameters.testMode, this);
 
         setAnimation(holder.itemView, holder.itemView.getContext());
 
@@ -83,15 +131,8 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
         if (optionList.get(position).getChancesLeft() > 0) {
 
-            holder.optionButton.setOnClickListener(view -> {
+            holder.optionButton.setOnClickListener(view -> DisplayRewardedAd(position, holder));
 
-                loadingDialog.show();
-
-                decrementChances(optionList.get(position).getOptionTitle(), position);
-
-                updateUserBalance(optionList.get(position).getOptionEarningAmount(), holder);
-
-            });
         } else {
 
             holder.optionButton.setBackground(AppCompatResources.getDrawable(
@@ -134,6 +175,16 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
             optionButton = itemView.findViewById(R.id.btn_get);
 
         }
+    }
+
+    @Override
+    public void onInitializationComplete() {
+        Log.d(TAG_ADD, "onInitializationComplete: Ads Initialization Complete");
+    }
+
+    @Override
+    public void onInitializationFailed(UnityAds.UnityAdsInitializationError error, String message) {
+        Log.d(TAG_ADD, "onInitializationFailed: Ads Initialization failed " + message);
     }
 
     private void checkForChancesRenewal(TextView optionButton) {
@@ -241,6 +292,45 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
         Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
 
         itemView.startAnimation(animation);
+    }
+
+    public void DisplayRewardedAd(int position, ViewHolder holder) {
+        UnityAds.load(AdsParameters.rewardedAndroidAdUnitId, loadListener);
+        UnityAds.show(mainActivity, "Rewarded_Android", new UnityAdsShowOptions(), showListener);
+
+        Dialog dialog = new Dialog(mainActivity);
+        dialog.setContentView(R.layout.layout_claim_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        dialog.show();
+
+        TextView earnAmount = dialog.findViewById(R.id.amount_won);
+        earnAmount.setText(String.valueOf(optionList.get(position).getOptionEarningAmount()));
+
+        TextView btnCollect = dialog.findViewById(R.id.btn_collect);
+        btnCollect.setOnClickListener(view1 -> {
+
+            loadingDialog.show();
+
+            decrementChances(optionList.get(position).getOptionTitle(), position);
+
+            DisplayInterstitial();
+
+            updateUserBalance(optionList.get(position).getOptionEarningAmount(), holder);
+
+            dialog.dismiss();
+
+        });
+    }
+
+    private void DisplayInterstitial(){
+        UnityAds.load(AdsParameters.interstitialAndroidAdUnitId, loadListener);
+        UnityAds.show(mainActivity, "Interstitial_Android", new UnityAdsShowOptions(), showListener);
     }
 
     private void updateUserBalance(double value, ViewHolder holder){

@@ -97,4 +97,10 @@
     <string name="name">Name</string>
     <string name="isGoogleLogin">isGoogleLogin</string>
     <string name="photoUrl">photoUrl</string>
+    <string name="verify_email_address">Verify Email Address</string>
+    <string name="dummy_email_text">OTP send to APP hub.987@gmail.com</string>
+    <string name="submit_otp">Submit OTP</string>
+    <string name="congratulations1">Congratulations!</string>
+    <string name="collect">Collect</string>
+    <string name="no_chances">0 Chance left</string>
 </resources>

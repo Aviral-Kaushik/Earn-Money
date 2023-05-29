@@ -34,6 +34,8 @@ android {
 
 dependencies {
 
+    implementation 'com.unity3d.ads:unity-ads:4.5.0'
+    implementation 'io.github.chaosleung:pinview:1.4.4'
     implementation "io.getstream:avatarview-coil:1.0.7"
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'

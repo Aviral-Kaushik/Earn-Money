@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="220dp"
+    android:layout_height="220dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:background="@drawable/ic_claim_dialog_background">
+
+    <TextView
+        android:id="@+id/congratulations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/congratulations1"
+        android:fontFamily="@font/inter_medium"
+        android:textSize="12sp"
+        android:textColor="#B3000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/congratulations">
+
+        <TextView
+            android:id="@+id/tv_you_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/you_won"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="16sp"
+            android:layout_marginEnd="2dp"
+            android:gravity="end"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/amount_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/dummy_price"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="16sp"
+            android:layout_marginStart="2dp"
+            android:textColor="#E97208"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_collect"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:text="@string/collect"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:fontFamily="@font/inter_semi_bold"
+        android:textSize="12sp"
+        android:background="@drawable/btn_collect_background"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/ll1"
+        app:layout_constraintStart_toStartOf="@id/ll1"
+        app:layout_constraintEnd_toEndOf="@id/ll1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

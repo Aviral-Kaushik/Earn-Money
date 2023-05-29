@@ -37,6 +37,7 @@ public class OtpActivity extends AppCompatActivity {
 
         if (intent.hasExtra("email")) {
             email = intent.getStringExtra("email");
+            binding.tvEmail.setText(String.format("OTP send to %s", email));
         }
 
         Snackbar.make(
@@ -45,16 +46,34 @@ public class OtpActivity extends AppCompatActivity {
                 Snackbar.LENGTH_SHORT
         ).show();
 
-        resendOtp();
+        binding.submitOtp.setOnClickListener(view -> {
 
-        verifyOtp();
+            Log.d(TAG, "onCreate: Otp entered by user: " + binding.editTextOtp.getText());
+
+            if (!String.valueOf(binding.editTextOtp.getText()).equals("")) {
+
+                verifyOtp();
+
+            } else {
+                Snackbar.make(
+                        binding.layoutOtp,
+                        "Please enter otp",
+                        Snackbar.LENGTH_SHORT
+                ).show();
+            }
+
+        });
+
+//        resendOtp();
+
+
     }
 
     private void verifyOtp() {
 
         AndroidNetworking.post(ApiLinks.VERIFY_OTP)
                 .addBodyParameter("email_id", email)
-                .addBodyParameter("otp", binding.editTextOtp.getText().toString())
+                .addBodyParameter("otp", String.valueOf(binding.editTextOtp.getText()))
                 .build().getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -62,7 +81,7 @@ public class OtpActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: Response of otp verify: " + response);
 
                         try {
-                            if (response.getString("message").equals("Verified")) {
+                            if (response.getString("message").equals("Success")) {
 
                                 Intent intent = new Intent(OtpActivity.this, PasswordActivity.class);
                                 intent.putExtra("email", email);
