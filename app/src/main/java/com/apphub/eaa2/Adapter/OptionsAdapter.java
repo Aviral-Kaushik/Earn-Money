@@ -3,6 +3,7 @@ package com.apphub.eaa2.Adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,7 @@ public class OptionsAdapter
 
     private static final String TAG_ADD = "AviralAdsOptionsAdapter";
 
-    private final int TOTAL_CHANCES = 30;
+    private final int TOTAL_CHANCES = 1;
 
     private final ArrayList<Options> optionList;
     private final MainActivity mainActivity;
@@ -115,6 +116,20 @@ public class OptionsAdapter
 
         setAnimation(holder.itemView, holder.itemView.getContext());
 
+        if (optionList.get(position).getChancesLeft() <= 0) {
+            holder.optionButton.setBackground(AppCompatResources.getDrawable(
+                    mainActivity, R.drawable.btn_grey_get_background
+            ));
+
+            holder.optionRewardAmount.setTextColor(Color.parseColor("#CCCCCC"));
+
+            holder.optionButton.setOnClickListener(view -> Snackbar.make(
+                    holder.itemView,
+                    "All chances for this reward are finished. Please wait for some time",
+                    Snackbar.LENGTH_SHORT
+            ).show());
+        }
+
         holder.optionTitle.setText(optionList.get(position).getOptionTitle());
         holder.optionDescription.setText(optionList.get(position).getOptionDescription());
         holder.optionRewardAmount.setText(String.format("$%s",
@@ -139,13 +154,15 @@ public class OptionsAdapter
                     mainActivity, R.drawable.btn_grey_get_background
             ));
 
+            holder.optionRewardAmount.setTextColor(Color.parseColor("#CCCCCC"));
+
             holder.optionButton.setOnClickListener(view -> Snackbar.make(
                     holder.itemView,
                     "All chances for this reward are finished. Please wait for some time",
                     Snackbar.LENGTH_SHORT
             ).show());
 
-            checkForChancesRenewal(holder.optionButton);
+            checkForChancesRenewal(holder.optionButton, holder.optionRewardAmount, position, holder);
 
         }
 
@@ -187,37 +204,180 @@ public class OptionsAdapter
         Log.d(TAG_ADD, "onInitializationFailed: Ads Initialization failed " + message);
     }
 
-    private void checkForChancesRenewal(TextView optionButton) {
+    private void checkForChancesRenewal(TextView optionButton, TextView rewardAmount, int position, ViewHolder holder) {
 
         loadingDialog.show();
 
-        if (chances.getCandyCrushChances() == 0) {
+        if (chances.getMoneyBagChances() == 0) {
 
-            SharedPreferences candyCrushSharedPreferences = mainActivity.getSharedPreferences(
-                    mainActivity.getString(R.string.cancy_crush_reward),
+            SharedPreferences moneyBagSharedPreferences = mainActivity.getSharedPreferences(
+                    mainActivity.getString(R.string.money_bag_reward),
                     Context.MODE_PRIVATE
             );
 
-            long storedTime = candyCrushSharedPreferences.getLong(mainActivity.getString(R.string.candy_crush_time), -1);
+            long storedTime = moneyBagSharedPreferences.getLong(mainActivity.getString(R.string.money_bag_time), -1);
+
+            boolean comparison = TimeUtils.compareTimeWithSixHours(storedTime, "moneyBag");
+
+            if (comparison) {
+
+                SharedPreferences.Editor moneyBagEditor = moneyBagSharedPreferences.edit();
+
+                moneyBagEditor.putInt(
+                        mainActivity.getString(R.string.chances_left),
+                        TOTAL_CHANCES
+                );
+
+                moneyBagEditor.apply();
+
+                toggleView(optionButton, rewardAmount,position, holder);
+            }
+
+
+        }
+
+        if (chances.getSurpriseGiftChances() == 0) {
+
+            SharedPreferences moneyBagSharedPreferences = mainActivity.getSharedPreferences(
+                    mainActivity.getString(R.string.surprise_gift_reward),
+                    Context.MODE_PRIVATE
+            );
+
+            long storedTime = moneyBagSharedPreferences.getLong(mainActivity.getString(R.string.surprise_gift_time), -1);
+
+            boolean comparison = TimeUtils.compareTimeWithSixHours(storedTime, "surpriseGift");
+
+            if (comparison) {
+
+                SharedPreferences.Editor moneyBagEditor = moneyBagSharedPreferences.edit();
+
+                moneyBagEditor.putInt(
+                        mainActivity.getString(R.string.chances_left),
+                        TOTAL_CHANCES
+                );
+
+                moneyBagEditor.apply();
+
+                toggleView(optionButton, rewardAmount,position, holder);
+            }
+
+
+        }
+
+        if (chances.getDailyBonusChances() == 0) {
+
+            SharedPreferences moneyBagSharedPreferences = mainActivity.getSharedPreferences(
+                    mainActivity.getString(R.string.daily_bonus_reward),
+                    Context.MODE_PRIVATE
+            );
+
+            long storedTime = moneyBagSharedPreferences.getLong(mainActivity.getString(R.string.daily_bonus_time), -1);
 
             boolean comparison = TimeUtils.compareTimeWithSixHours(storedTime, "dailyBonus");
 
             if (comparison) {
 
-                SharedPreferences.Editor candyCrushEditor = candyCrushSharedPreferences.edit();
+                SharedPreferences.Editor moneyBagEditor = moneyBagSharedPreferences.edit();
 
-                candyCrushEditor.putInt(
+                moneyBagEditor.putInt(
                         mainActivity.getString(R.string.chances_left),
                         TOTAL_CHANCES
                 );
 
-                candyCrushEditor.apply();
+                moneyBagEditor.apply();
 
-                toggleView(optionButton);
+                toggleView(optionButton, rewardAmount,position, holder);
             }
 
 
         }
+
+        if (chances.getEarnRewardChances() == 0) {
+
+            SharedPreferences moneyBagSharedPreferences = mainActivity.getSharedPreferences(
+                    mainActivity.getString(R.string.earn_reward_reward),
+                    Context.MODE_PRIVATE
+            );
+
+            long storedTime = moneyBagSharedPreferences.getLong(mainActivity.getString(R.string.earn_reward_time), -1);
+
+            boolean comparison = TimeUtils.compareTimeWithSixHours(storedTime, "earnReward");
+
+            if (comparison) {
+
+                SharedPreferences.Editor moneyBagEditor = moneyBagSharedPreferences.edit();
+
+                moneyBagEditor.putInt(
+                        mainActivity.getString(R.string.chances_left),
+                        TOTAL_CHANCES
+                );
+
+                moneyBagEditor.apply();
+
+
+                toggleView(optionButton, rewardAmount,position, holder);
+            }
+
+
+        }
+
+        if (chances.getGoldCoinChances() == 0) {
+
+            SharedPreferences moneyBagSharedPreferences = mainActivity.getSharedPreferences(
+                    mainActivity.getString(R.string.gold_coin_reward),
+                    Context.MODE_PRIVATE
+            );
+
+            long storedTime = moneyBagSharedPreferences.getLong(mainActivity.getString(R.string.gold_coin_time), -1);
+
+            boolean comparison = TimeUtils.compareTimeWithSixHours(storedTime, "moneyBag");
+
+            if (comparison) {
+
+                SharedPreferences.Editor moneyBagEditor = moneyBagSharedPreferences.edit();
+
+                moneyBagEditor.putInt(
+                        mainActivity.getString(R.string.chances_left),
+                        TOTAL_CHANCES
+                );
+
+                moneyBagEditor.apply();
+
+                toggleView(optionButton, rewardAmount,position, holder);
+            }
+
+
+        }
+
+        if (chances.getWalletMoneyChances() == 0) {
+
+            SharedPreferences moneyBagSharedPreferences = mainActivity.getSharedPreferences(
+                    mainActivity.getString(R.string.wallet_money_reward),
+                    Context.MODE_PRIVATE
+            );
+
+            long storedTime = moneyBagSharedPreferences.getLong(mainActivity.getString(R.string.wallet_money_time), -1);
+
+            boolean comparison = TimeUtils.compareTimeWithSixHours(storedTime, "moneyBag");
+
+            if (comparison) {
+
+                SharedPreferences.Editor moneyBagEditor = moneyBagSharedPreferences.edit();
+
+                moneyBagEditor.putInt(
+                        mainActivity.getString(R.string.chances_left),
+                        TOTAL_CHANCES
+                );
+
+                moneyBagEditor.apply();
+
+                toggleView(optionButton, rewardAmount,position, holder);
+            }
+
+            notifyItemChanged(position);
+
+        }
+
 
         loadingDialog.dismiss();
 
@@ -228,23 +388,21 @@ public class OptionsAdapter
         Log.d(TAG, "decrementChances: Decrementing Chances");
 
         switch (rewardName) {
-
-            case "Candy Crush":
-
-                Log.d(TAG, "decrementChances: Opening SP of dailyBonus");
+            case "Money Bag":
+                Log.d(TAG, "decrementChances: Opening SP of Money Bag");
 
                 SharedPreferences candyCrushSharedPreferences = mainActivity.getSharedPreferences(
-                        mainActivity.getString(R.string.cancy_crush_reward),
+                        mainActivity.getString(R.string.money_bag_reward),
                         Context.MODE_PRIVATE
                 );
 
                 SharedPreferences.Editor candyCrushEditor = candyCrushSharedPreferences.edit();
 
-                if (chances.getCandyCrushChances() > 1) {
+                if (chances.getMoneyBagChances() > 1) {
 
                     candyCrushEditor.putInt(
                             mainActivity.getString(R.string.chances_left),
-                            (chances.getCandyCrushChances() - 1)
+                            (chances.getMoneyBagChances() - 1)
                     );
 
                     optionList.get(position).setChancesLeft(optionList.get(position).getChancesLeft() - 1);
@@ -256,10 +414,10 @@ public class OptionsAdapter
                             0
                     );
 
-                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for Daily Bonus: " + TimeUtils.getCurrentTime());
+                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for Money Bag: " + TimeUtils.getCurrentTime());
 
                     candyCrushEditor.putLong(
-                            mainActivity.getString(R.string.candy_crush_time),
+                            mainActivity.getString(R.string.money_bag_time),
                             TimeUtils.getCurrentTime()
                     );
 
@@ -268,23 +426,242 @@ public class OptionsAdapter
 
                 candyCrushEditor.apply();
 
+                Log.d(TAG, "decrementChances: money bag chances--");
+
+                notifyItemChanged(position);
+
+                break;
+            case "Surprise Gift":
+                Log.d(TAG, "decrementChances: Opening SP of Surprise Gift");
+
+                SharedPreferences surpriseGiftSharedPreferences = mainActivity.getSharedPreferences(
+                        mainActivity.getString(R.string.surprise_gift_reward),
+                        Context.MODE_PRIVATE
+                );
+
+                SharedPreferences.Editor surpriseGiftEditor = surpriseGiftSharedPreferences.edit();
+
+                if (chances.getSurpriseGiftChances() > 1) {
+
+                    surpriseGiftEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            (chances.getSurpriseGiftChances() - 1)
+                    );
+
+                    optionList.get(position).setChancesLeft(optionList.get(position).getChancesLeft() - 1);
+
+                } else {
+
+                    surpriseGiftEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            0
+                    );
+
+                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for Surprise Gift: " + TimeUtils.getCurrentTime());
+
+                    surpriseGiftEditor.putLong(
+                            mainActivity.getString(R.string.surprise_gift_time),
+                            TimeUtils.getCurrentTime()
+                    );
+
+                    optionList.get(position).setChancesLeft(0);
+                }
+
+                surpriseGiftEditor.apply();
+
+                Log.d(TAG, "decrementChances: surprise gift chances--");
+
+                notifyItemChanged(position);
+
+                break;
+            case "Daily Bonus":
+                Log.d(TAG, "decrementChances: Opening SP of Daily Bonus");
+
+                SharedPreferences dailyBonusSharedPreferences = mainActivity.getSharedPreferences(
+                        mainActivity.getString(R.string.daily_bonus_reward),
+                        Context.MODE_PRIVATE
+                );
+
+                SharedPreferences.Editor dailyBonusEditor = dailyBonusSharedPreferences.edit();
+
+                if (chances.getDailyBonusChances() > 1) {
+
+                    dailyBonusEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            (chances.getDailyBonusChances() - 1)
+                    );
+
+                    optionList.get(position).setChancesLeft(optionList.get(position).getChancesLeft() - 1);
+
+                } else {
+
+                    dailyBonusEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            0
+                    );
+
+                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for Daily Bonus: " + TimeUtils.getCurrentTime());
+
+                    dailyBonusEditor.putLong(
+                            mainActivity.getString(R.string.daily_bonus_time),
+                            TimeUtils.getCurrentTime()
+                    );
+
+                    optionList.get(position).setChancesLeft(0);
+                }
+
+                dailyBonusEditor.apply();
+
                 Log.d(TAG, "decrementChances: dailyBonus chances--");
 
                 notifyItemChanged(position);
 
                 break;
+            case "Earn Reward":
+                Log.d(TAG, "decrementChances: Opening SP of Earn Reward");
 
+                SharedPreferences earnRewardSharedPreferences = mainActivity.getSharedPreferences(
+                        mainActivity.getString(R.string.earn_reward_reward),
+                        Context.MODE_PRIVATE
+                );
+
+                SharedPreferences.Editor earnRewardEditor = earnRewardSharedPreferences.edit();
+
+                if (chances.getEarnRewardChances() > 1) {
+
+                    earnRewardEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            (chances.getEarnRewardChances() - 1)
+                    );
+
+                    optionList.get(position).setChancesLeft(optionList.get(position).getChancesLeft() - 1);
+
+                } else {
+
+                    earnRewardEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            0
+                    );
+
+                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for Earn Reward: " + TimeUtils.getCurrentTime());
+
+                    earnRewardEditor.putLong(
+                            mainActivity.getString(R.string.earn_reward_time),
+                            TimeUtils.getCurrentTime()
+                    );
+
+                    optionList.get(position).setChancesLeft(0);
+                }
+
+                earnRewardEditor.apply();
+
+                Log.d(TAG, "decrementChances: Earn Reward chances--");
+
+                notifyItemChanged(position);
+                break;
+            case "Gold Coin":
+                Log.d(TAG, "decrementChances: Opening SP of Gold Coin");
+
+                SharedPreferences goldCoinsSharedPreferences = mainActivity.getSharedPreferences(
+                        mainActivity.getString(R.string.gold_coin_reward),
+                        Context.MODE_PRIVATE
+                );
+
+                SharedPreferences.Editor goldCoinEditor = goldCoinsSharedPreferences.edit();
+
+                if (chances.getGoldCoinChances() > 1) {
+
+                    goldCoinEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            (chances.getGoldCoinChances() - 1)
+                    );
+
+                    optionList.get(position).setChancesLeft(optionList.get(position).getChancesLeft() - 1);
+
+                } else {
+
+                    goldCoinEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            0
+                    );
+
+                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for Gold Coin Bonus: " + TimeUtils.getCurrentTime());
+
+                    goldCoinEditor.putLong(
+                            mainActivity.getString(R.string.gold_coin_time),
+                            TimeUtils.getCurrentTime()
+                    );
+
+                    optionList.get(position).setChancesLeft(0);
+                }
+
+                goldCoinEditor.apply();
+
+                Log.d(TAG, "decrementChances: Gold Coin chances--");
+
+                notifyItemChanged(position);
+
+                break;
+            case "Wallet Money":
+                Log.d(TAG, "decrementChances: Opening SP of wallet money");
+
+                SharedPreferences walletMoneySharedPreferences = mainActivity.getSharedPreferences(
+                        mainActivity.getString(R.string.wallet_money_reward),
+                        Context.MODE_PRIVATE
+                );
+
+                SharedPreferences.Editor walletMoneyEditor = walletMoneySharedPreferences.edit();
+
+                if (chances.getWalletMoneyChances() > 1) {
+
+                    walletMoneyEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            (chances.getWalletMoneyChances() - 1)
+                    );
+
+                    optionList.get(position).setChancesLeft(optionList.get(position).getChancesLeft() - 1);
+
+                } else {
+
+                    walletMoneyEditor.putInt(
+                            mainActivity.getString(R.string.chances_left),
+                            0
+                    );
+
+                    Log.d(TAG, "decrementChances: Adding Time to shared Preferences for wallet money: " + TimeUtils.getCurrentTime());
+
+                    walletMoneyEditor.putLong(
+                            mainActivity.getString(R.string.wallet_money_time),
+                            TimeUtils.getCurrentTime()
+                    );
+
+                    optionList.get(position).setChancesLeft(0);
+                }
+
+                walletMoneyEditor.apply();
+
+                Log.d(TAG, "decrementChances: wallet money chances--");
+
+                notifyItemChanged(position);
+
+                break;
         }
 
     }
 
-    private void toggleView(TextView optionButton) {
+    private void toggleView(TextView optionButton,TextView rewardAmount, int position, ViewHolder holder) {
 
         optionButton.setBackground(AppCompatResources.getDrawable(
                 mainActivity, R.drawable.btn_get_background
         ));
 
+        rewardAmount.setTextColor(Color.parseColor("#E96200"));
+
         loadingDialog.dismiss();
+
+        optionButton.setOnClickListener(view -> DisplayRewardedAd(position, holder));
+
+
 
     }
 
@@ -315,6 +692,22 @@ public class OptionsAdapter
         TextView btnCollect = dialog.findViewById(R.id.btn_collect);
         btnCollect.setOnClickListener(view1 -> {
 
+            if ((optionList.get(position).getChancesLeft() - 1) == 0) {
+                holder.optionButton.setBackground(AppCompatResources.getDrawable(
+                        mainActivity, R.drawable.btn_grey_get_background
+                ));
+
+                holder.optionRewardAmount.setTextColor(Color.parseColor("#CCCCCC"));
+
+                holder.optionButton.setOnClickListener(view -> Snackbar.make(
+                        holder.itemView,
+                        "All chances for this reward are finished. Please wait for some time",
+                        Snackbar.LENGTH_SHORT
+                ).show());
+            }
+
+            notifyItemChanged(position);
+
             loadingDialog.show();
 
             decrementChances(optionList.get(position).getOptionTitle(), position);
@@ -328,12 +721,12 @@ public class OptionsAdapter
         });
     }
 
-    private void DisplayInterstitial(){
+    private void DisplayInterstitial() {
         UnityAds.load(AdsParameters.interstitialAndroidAdUnitId, loadListener);
         UnityAds.show(mainActivity, "Interstitial_Android", new UnityAdsShowOptions(), showListener);
     }
 
-    private void updateUserBalance(double value, ViewHolder holder){
+    private void updateUserBalance(double value, ViewHolder holder) {
         String uid = mainActivity.getSharedPreferences("user", Context.MODE_PRIVATE).getString("uid", "");
         String balance_add = String.valueOf(value);
 
@@ -350,7 +743,7 @@ public class OptionsAdapter
 
                             String status = response.getString("status");
 
-                            if (status.equals("updated")){
+                            if (status.equals("updated")) {
 
                                 Log.d(TAG, "onResponse: User Balance Updated");
 

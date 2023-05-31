@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "AviralAPI";
 
-    private final int TOTAL_CHANCES = 30;
+    private final int TOTAL_CHANCES = 1;
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -390,17 +390,59 @@ public class LoginActivity extends AppCompatActivity {
 
     private void addChancesToSharedPreferences() {
 
-        SharedPreferences candyCrushSharedPreferences = getSharedPreferences(
-                getString(R.string.cancy_crush_reward),
+        Log.d(TAG, "getChancesFromSharedPreference: Added Chances to Shared Preferences");
+
+        SharedPreferences moneyBagSharedPreferences = getSharedPreferences(
+                getString(R.string.money_bag_reward),
+                Context.MODE_PRIVATE
+        );
+
+        SharedPreferences surpriseGiftSharedPreferences = getSharedPreferences(
+                getString(R.string.surprise_gift_reward),
+                Context.MODE_PRIVATE
+        );
+
+        SharedPreferences dailyBonusSharedPreferences = getSharedPreferences(
+                getString(R.string.daily_bonus_reward),
+                Context.MODE_PRIVATE
+        );
+
+        SharedPreferences earnRewardSharedPreferences = getSharedPreferences(
+                getString(R.string.earn_reward_reward),
+                Context.MODE_PRIVATE
+        );
+
+        SharedPreferences goldCoinSharedPreferences = getSharedPreferences(
+                getString(R.string.gold_coin_reward),
+                Context.MODE_PRIVATE
+        );
+
+        SharedPreferences walletMoneySharedPreferences = getSharedPreferences(
+                getString(R.string.money_bag_reward),
                 Context.MODE_PRIVATE
         );
 
 
-        SharedPreferences.Editor candyCrushEditor = candyCrushSharedPreferences.edit();
+        SharedPreferences.Editor moneyBagEditor = moneyBagSharedPreferences.edit();
+        SharedPreferences.Editor surpriseGiftEditor = surpriseGiftSharedPreferences.edit();
+        SharedPreferences.Editor dailyBonusEditor = dailyBonusSharedPreferences.edit();
+        SharedPreferences.Editor earnRewardEditor = earnRewardSharedPreferences.edit();
+        SharedPreferences.Editor goldCoinEditor = goldCoinSharedPreferences.edit();
+        SharedPreferences.Editor walletMoneyEditor = walletMoneySharedPreferences.edit();
 
-        candyCrushEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
+        moneyBagEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
+        surpriseGiftEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
+        dailyBonusEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
+        earnRewardEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
+        goldCoinEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
+        walletMoneyEditor.putInt(getString(R.string.chances_left), TOTAL_CHANCES);
 
-        candyCrushEditor.apply();
+        moneyBagEditor.apply();
+        surpriseGiftEditor.apply();
+        dailyBonusEditor.apply();
+        earnRewardEditor.apply();
+        goldCoinEditor.apply();
+        walletMoneyEditor.apply();
 
         Log.d("AviralAPI", "addChancesToSharedPreferences: Added all the chances in shared preferences");
 

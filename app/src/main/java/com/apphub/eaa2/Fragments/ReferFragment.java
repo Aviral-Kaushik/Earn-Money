@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.apphub.eaa2.Activities.MainActivity;
+import com.apphub.eaa2.Activities.TermsAndConditionActivity;
 import com.apphub.eaa2.databinding.FragmentReferBinding;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -41,6 +42,8 @@ public class ReferFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.terms.setOnClickListener(view1 -> startActivity(new Intent(mainActivity, TermsAndConditionActivity.class)));
 
         binding.icBack.setOnClickListener(view1 -> mainActivity.showHomeFragment());
 

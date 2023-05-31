@@ -37,7 +37,7 @@
         android:text="@string/dummy_price"
         android:fontFamily="@font/open_sans_semi_bold"
         android:textSize="22sp"
-        android:textColor="#CC000000"
+        android:textColor="#E6000000"
         app:layout_constraintBaseline_toBaselineOf="@id/tv_spin_wheel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

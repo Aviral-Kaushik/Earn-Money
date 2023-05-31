@@ -54,11 +54,8 @@ public class GamesAdapter extends BaseAdapter {
 
         ImageView gameImage = view.findViewById(R.id.game_image);
         TextView gameName = view.findViewById(R.id.game_name);
-        TextView gameCoins = view.findViewById(R.id.game_coins);
 
         gameName.setText(gameArrayList.get(i).getGameName());
-
-        gameCoins.setText(gameArrayList.get(i).getGameCoins());
 
         Glide.with(context)
                 .load(gameArrayList.get(i).getImage())

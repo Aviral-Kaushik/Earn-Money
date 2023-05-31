@@ -29,7 +29,7 @@ public class TimeUtils {
 
             Log.d(TAG, "compareTimeWithSixHours: Difference of time in Millis: " + timeDifferenceInMillis + " " + tag);
 
-            // Check if the time difference is greater than 6 hours (6 * 60 * 60 * 1000 = 21,600,000)
+            // Check if the time difference is greater than 6 hours (6 * 60 * 60 * 1000 = 21600000)
             if (timeDifferenceInMillis > 21600000) {
 
                 Log.d(TAG, "compareTimeWithSixHours: Time Difference is Greater then 6 hours " + tag);

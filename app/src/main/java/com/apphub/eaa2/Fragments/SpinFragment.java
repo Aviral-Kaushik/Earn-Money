@@ -55,7 +55,7 @@ public class SpinFragment extends Fragment implements IUnityAdsInitializationLis
     }
 
     // 100 = Jackpot
-    final double[] sectors = {0.10, 0, 0.02, 0.05, 0.01, 0.05, 0.20, 100, 0.15, 0.25, 0.01, 0.05};
+    final double[] sectors = {0.10, 0, 0.02, 0.05, 0.01, 0.05, 0.20, 0.35, 0.15, 0.25, 0.01, 0.05};
     final int[] sectorsDegree = new int[sectors.length];
 
     int randomSectorIndex = 0;

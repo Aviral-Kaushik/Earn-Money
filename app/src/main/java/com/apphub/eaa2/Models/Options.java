@@ -1,7 +1,5 @@
 package com.apphub.eaa2.Models;
 
-import java.util.Calendar;
-
 public class Options {
 
     private int optionImage;
@@ -14,16 +12,28 @@ public class Options {
 
     private int chancesLeft;
 
+    private int totalChances;
+
     public Options(int optionImage,
                    String optionTitle,
                    String optionDescription,
                    double optionEarningAmount,
-                   int chancesLeft) {
+                   int chancesLeft,
+                   int totalChances) {
         this.optionImage = optionImage;
         this.optionTitle = optionTitle;
         this.optionDescription = optionDescription;
         this.optionEarningAmount = optionEarningAmount;
         this.chancesLeft = chancesLeft;
+        this.totalChances = totalChances;
+    }
+
+    public int getTotalChances() {
+        return totalChances;
+    }
+
+    public void setTotalChances(int totalChances) {
+        this.totalChances = totalChances;
     }
 
     public int getChancesLeft() {

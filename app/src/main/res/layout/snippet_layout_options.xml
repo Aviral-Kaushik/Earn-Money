@@ -32,7 +32,7 @@
         android:text="@string/candy_crush"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/option_image"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
         android:text="@string/options_desc"
         android:textAllCaps="false"
         android:textColor="#B3000000"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/option_title"
         app:layout_constraintTop_toBottomOf="@id/option_title" />
@@ -62,11 +62,11 @@
         android:text="@string/dummy_price"
         android:textAllCaps="false"
         android:textColor="#E96200"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="25dp"
-        android:textSize="12sp"
+        android:layout_marginEnd="24dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/option_title"
+        app:layout_constraintBottom_toBottomOf="@id/option_title"/>
 
     <TextView
         android:id="@+id/btn_get"
@@ -81,12 +81,13 @@
         android:paddingEnd="12dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/white"
         android:background="@drawable/btn_get_background"
         android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/option_desc"
         app:layout_constraintEnd_toEndOf="@id/options_reward_amount"
         app:layout_constraintStart_toStartOf="@id/options_reward_amount"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/options_reward_amount"/>
 
 

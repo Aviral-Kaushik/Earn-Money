@@ -90,16 +90,16 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="25dp"
+                    android:layout_width="0dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="15dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.4"
                     android:layout_marginBottom="15dp"
                     android:src="@drawable/ic_wallet"
                     android:contentDescription="@string/my_balance"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/my_balance"
                     android:textColor="#B3000000"
@@ -129,7 +129,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="25dp"
+                    android:layout_width="0dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.4"
@@ -138,7 +138,7 @@
                     android:contentDescription="@string/invite"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/invite"
                     android:textColor="#B3000000"
@@ -169,7 +169,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="25dp"
+                    android:layout_width="0dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.4"
@@ -178,7 +178,7 @@
                     android:contentDescription="@string/help"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/help"
                     android:textColor="#B3000000"
@@ -209,7 +209,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="25dp"
+                    android:layout_width="0dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.4"
@@ -218,7 +218,7 @@
                     android:contentDescription="@string/rate_us"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/rate_us"
                     android:textColor="#B3000000"
@@ -281,35 +281,35 @@
                 android:id="@+id/privacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginStart="25dp"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="15dp"
-                    android:layout_weight="0.5"
                     android:layout_marginBottom="15dp"
-                    android:src="@drawable/ic_privacy_policy"
-                    android:contentDescription="@string/privacy_policy"/>
+                    android:layout_weight="0.5"
+                    android:contentDescription="@string/privacy_policy"
+                    android:src="@drawable/ic_privacy_policy" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="@string/privacy_policy"
                     android:textColor="#B3000000"
-                    android:layout_weight="1"
-                    android:layout_marginStart="15dp"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textSize="18sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="18sp" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_privacy_policy"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
 
             </LinearLayout>
 
@@ -333,7 +333,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="25dp"
+                    android:layout_width="0dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="0.4"
@@ -342,7 +342,7 @@
                     android:contentDescription="@string/logout"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/logout"
                     android:textColor="#B3000000"
@@ -389,10 +389,9 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:src="@drawable/ic_dummy_pp"
-        android:layout_marginTop="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/profile_card"
         app:layout_constraintBottom_toTopOf="@id/profile_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

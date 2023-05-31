@@ -34,10 +34,9 @@
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/open_sans_regular"
         android:gravity="center"
-        android:text="@string/game_coins"
+        android:text="@string/play"
         android:textAlignment="center"
         android:textColor="#E96200"
-        android:textSize="9sp" />
-
+        android:textSize="12sp" />
 
 </LinearLayout>

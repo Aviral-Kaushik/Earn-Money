@@ -48,7 +48,7 @@
                 android:text="@string/terms"
                 android:textColor="#FC7700"
                 android:textSize="13sp"
-                app:layout_constraintBaseline_toBaselineOf="@id/tv_spin_wheel"
+                app:layout_constraintBottom_toBottomOf="@id/tv_spin_wheel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +98,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_weight="1.3"
+                    android:layout_weight="1.1"
                     android:fontFamily="@font/open_sans_semi_bold"
                     android:text="@string/dummy_referral_code"
                     android:textColor="@color/black"
@@ -119,7 +119,7 @@
                     android:id="@+id/tv_copy_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.7"
                     android:fontFamily="@font/open_sans_semi_bold"
                     android:text="@string/copy_code"
                     android:textColor="#9C000000"
@@ -135,6 +135,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="70dp"
                 android:orientation="horizontal"
+                android:weightSum="3"
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="@id/ll1"
                 app:layout_constraintStart_toStartOf="@id/ll1"
@@ -145,14 +146,14 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.8"
                     android:background="#4D000000" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:fontFamily="@font/open_sans_semi_bold"
                     android:text="@string/or_share_via"
                     android:textAlignment="center"
@@ -164,7 +165,7 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.8"
                     android:background="#4D000000" />
 
             </LinearLayout>

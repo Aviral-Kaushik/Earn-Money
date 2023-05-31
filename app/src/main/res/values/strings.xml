@@ -90,7 +90,18 @@
     <string name="google_oauth_key">414361514903-3apeccorqgbv8tt3kfr6pok2qlkq9a4a.apps.googleusercontent.com</string>
     <string name="check_shared_preferences">UserCheck</string>
     <string name="cancy_crush_reward">Candy Crush Reward</string>
-    <string name="candy_crush_time">candyCrushTime</string>
+    <string name="money_bag_reward">Money Bag Reward</string>
+    <string name="surprise_gift_reward">Surprise Gift Reward</string>
+    <string name="daily_bonus_reward">Daily Bonus Reward</string>
+    <string name="earn_reward_reward">Earn Reward Reward</string>
+    <string name="gold_coin_reward">Gold Coin Reward</string>
+    <string name="wallet_money_reward">Wallet Money Reward</string>
+    <string name="money_bag_time">moneyBagTime</string>
+    <string name="surprise_gift_time">surpriseGiftTime</string>
+    <string name="daily_bonus_time">dailyBonusTime</string>
+    <string name="earn_reward_time">earnRewardTime</string>
+    <string name="gold_coin_time">goldCoinTime</string>
+    <string name="wallet_money_time">walletMoneyTime</string>
     <string name="rewards_completed">Rewards Completed.</string>
     <string name="intent_extra_name">name</string>
     <string name="intent_extra_balance">balance</string>
@@ -103,4 +114,5 @@
     <string name="congratulations1">Congratulations!</string>
     <string name="collect">Collect</string>
     <string name="no_chances">0 Chance left</string>
+    <string name="play">PLAY</string>
 </resources>
