@@ -374,8 +374,6 @@ public class OptionsAdapter
                 toggleView(optionButton, rewardAmount,position, holder);
             }
 
-            notifyItemChanged(position);
-
         }
 
 

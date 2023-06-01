@@ -192,6 +192,15 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
 
         });
+
+        binding.banner.setOnClickListener(view1 -> {
+
+            Intent intent = new Intent(mainActivity, GamesActivity.class);
+            intent.putExtra("balance", binding.usernamePrice.getText().toString());
+            startActivity(intent);
+
+        });
+
     }
 
     private void setUpOptionAdapter() {
