@@ -3,19 +3,14 @@
 ## Screenshots
 
 <p>
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20326.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20327.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20328.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20329.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20330.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20418.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20420.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20423.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20425.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20426.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Google%20Pixel%202%20XL%20-%20427.png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Login%20Page%20(1).png" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/Login%20Page.png" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image1.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image2.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image3.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image4.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image5.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image6.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image7.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image8.jpeg" width="300px" style="padding: 10px" height="auto">
 </p>
 
 ## Description
