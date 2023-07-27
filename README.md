@@ -3,14 +3,8 @@
 ## Screenshots
 
 <p>
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image1.jpeg" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image2.jpeg" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image3.jpeg" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image4.jpeg" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image5.jpeg" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image6.jpeg" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image7.jpeg" width="300px" style="padding: 10px" height="auto">
-  <img src="https://github.com/Aviral-Kaushik/Earn-Money/blob/main/images/image8.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Credit-Card--UI/blob/main/images/image1.jpeg" width="300px" style="padding: 10px" height="auto">
+  <img src="https://github.com/Aviral-Kaushik/Credit-Card--UI/blob/main/images/image2.jpeg" width="300px" style="padding: 10px" height="auto">
 </p>
 
 ## Description
