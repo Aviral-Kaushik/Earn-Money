@@ -1,4 +1,5 @@
 # Earn-Money
+Earn Money is an application that offers exciting opportunities to earn money effortlessly. With its daily rewards, scratching card feature, and spinning wheel, users can enjoy a fun-filled experience while boosting their income. By simply engaging with the app on a regular basis, users can accumulate rewards and increase their chances of winning.
 
 ## Description
 
